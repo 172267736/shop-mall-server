@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shop.mall.biz.dao.GoodsPropertyValueDao">
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.biz.entity.GoodsPropertyValueEntity"
+            useGeneratedKeys="true">
+        insert into goods_property_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                unique_id,
+            </if>
+            <if test="goodsPropertyKeyUniqueId != null">
+                goods_property_key_unique_id,
+            </if>
+            <if test="propertyValue != null">
+                property_value,
+            </if>
+            <if test="priceIncrease != null">
+                price_increase,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                #{uniqueId},
+            </if>
+            <if test="goodsPropertyKeyUniqueId != null">
+                #{goodsPropertyKeyUniqueId},
+            </if>
+            <if test="propertyValue != null">
+                #{propertyValue},
+            </if>
+            <if test="priceIncrease != null">
+                #{priceIncrease},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="cn.shop.mall.biz.entity.GoodsPropertyValueEntity">
+        update goods_property_value
+        <set>
+            <if test="uniqueId != null">
+                unique_id = #{uniqueId},
+            </if>
+            <if test="goodsPropertyKeyUniqueId != null">
+                goods_property_key_unique_id = #{goodsPropertyKeyUniqueId},
+            </if>
+            <if test="propertyValue != null">
+                property_value = #{propertyValue},
+            </if>
+            <if test="priceIncrease != null">
+                price_increase = #{priceIncrease},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

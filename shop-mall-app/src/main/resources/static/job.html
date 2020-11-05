@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>应用管理</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="plugins/jqgrid/ui.jqgrid-bootstrap.css">
+    <link rel="stylesheet" href="plugins/ztree/css/metroStyle/metroStyle.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="libs/jquery.min.js"></script>
+    <script src="plugins/layer/layer.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/vue.min.js"></script>
+    <script src="plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="plugins/ztree/jquery.ztree.all.min.js"></script>
+    <script src="js/common.js"></script>
+
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-2">
+                <select class="form-control" v-model="search.groupId" @change="groupChange">
+                    <option v-for="group in groups" :value="group.id">{{group.groupName}}</option>
+                </select>
+            </div>
+            <a class="btn btn-default" @click="query">查询</a>
+            <a class="btn btn-primary" @click="save"><i class="fa fa-plus"></i>&nbsp;新增</a>
+        </div>
+        <table id="jqGrid"></table>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">应用名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="job.jobName" placeholder="应用名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">应用描述</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="job.description" placeholder="应用描述"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">工程类型</div>
+                <div class="col-sm-10">
+                    <select class="form-control" v-model="job.projectType">
+                        <option value="2">Java</option>
+                        <option value="1">Web</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">代码地址类型</div>
+                <div class="col-sm-10">
+                    <select class="form-control" v-model="job.codeType">
+                        <option value="1">svn</option>
+                        <option value="2">git</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">代码地址</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="job.codeAddress" placeholder="代码地址"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">服务器</div>
+                <div class="col-sm-10">
+                    <select class="form-control" v-model="job.sshServerId">
+                        <option v-for="server in servers" :value="server.id">{{server.hostName}}[{{server.osTypeName}}]</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">端口</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="job.port" placeholder="端口"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">环境变量</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="job.activeEnv" placeholder="环境变量"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">打包路径</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="job.jenkinsWorkspacePath" placeholder="打包路径"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">业务组</div>
+                <div class="col-sm-10">
+                    <select class="form-control" v-model="job.groupId">
+                        <option v-for="group in groups" :value="group.id">{{group.groupName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="add" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/job.js"></script>
+</body>
+</html>

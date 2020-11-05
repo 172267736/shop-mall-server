@@ -1,0 +1,14 @@
+package ${package}.${daoModuleName};
+
+import ${package}.${entityModuleName}.${className}Entity;
+
+/**
+ * ${comments}
+ */
+public interface ${className}Dao {
+
+    Integer save(${className}Entity ${classname}Entity);
+
+    Integer update(${className}Entity ${classname}Entity);
+	
+}

@@ -1,0 +1,107 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+    <actions/>
+    <description>#{description}</description>
+    <keepDependencies>false</keepDependencies>
+    <properties/>
+    <scm class="hudson.scm.SubversionSCM" plugin="subversion@2.12.1">
+        <locations>
+            <hudson.scm.SubversionSCM_-ModuleLocation>
+                <remote>#{codeAddress}</remote>
+                <credentialsId>ea3491c0-3261-421a-b103-aa2363c1325e</credentialsId>
+                <local>.</local>
+                <depthOption>infinity</depthOption>
+                <ignoreExternalsOption>true</ignoreExternalsOption>
+                <cancelProcessOnExternalsFail>true</cancelProcessOnExternalsFail>
+            </hudson.scm.SubversionSCM_-ModuleLocation>
+        </locations>
+        <excludedRegions></excludedRegions>
+        <includedRegions></includedRegions>
+        <excludedUsers></excludedUsers>
+        <excludedRevprop></excludedRevprop>
+        <excludedCommitMessages></excludedCommitMessages>
+        <workspaceUpdater class="hudson.scm.subversion.UpdateUpdater"/>
+        <ignoreDirPropChanges>false</ignoreDirPropChanges>
+        <filterChangelog>false</filterChangelog>
+        <quietOperation>true</quietOperation>
+    </scm>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers/>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Maven>
+            <targets>clean package -Dmaven.test.skip=true</targets>
+            <mavenName>maven</mavenName>
+            <usePrivateRepository>false</usePrivateRepository>
+            <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+            <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+            <injectBuildVariables>false</injectBuildVariables>
+        </hudson.tasks.Maven>
+        <jenkins.plugins.publish__over__ssh.BapSshBuilderPlugin plugin="publish-over-ssh@1.20.1">
+            <delegate>
+                <consolePrefix>SSH: </consolePrefix>
+                <delegate plugin="publish-over@0.22">
+                    <publishers>
+                        <jenkins.plugins.publish__over__ssh.BapSshPublisher plugin="publish-over-ssh@1.20.1">
+                            <configName>#{hostName}</configName>
+                            <verbose>false</verbose>
+                            <transfers>
+                                <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                                    <remoteDirectory>/#{jobName}</remoteDirectory>
+                                    <sourceFiles>#{jenkinsWorkspacePath}</sourceFiles>
+                                    <excludes></excludes>
+                                    <removePrefix>#{removePrefix}</removePrefix>
+                                    <remoteDirectorySDF>false</remoteDirectorySDF>
+                                    <flatten>false</flatten>
+                                    <cleanRemote>false</cleanRemote>
+                                    <noDefaultExcludes>false</noDefaultExcludes>
+                                    <makeEmptyDirs>false</makeEmptyDirs>
+                                    <patternSeparator>[, ]+</patternSeparator>
+                                    <execCommand>#!/bin/bash
+
+                                        source /etc/profile
+
+                                        cd /project
+
+                                        # jar包地址
+                                        JOB_NAME=#{jobName}
+                                        # jar包名称
+                                        JAR_NAME=#{jarName}
+                                        # 端口
+                                        APP_PORT=#{port}
+
+                                        #杀死进程
+                                        pid=$(netstat -nlp | grep :$APP_PORT | awk &apos;{print $7}&apos; | awk -F&quot;/&quot; &apos;{ print $1 }&apos;);
+                                        echo $pid;
+                                        if [  -n  &quot;$pid&quot;  ];  then
+                                        kill  -9  $pid;
+                                        fi
+
+                                        cd /project/$JOB_NAME
+                                        chmod -777 $JAR_NAME
+                                        nohup java -Dfile.encoding=utf8 -Dspring.profiles.active=#{activeEnv} -Dserver.port=$APP_PORT -jar $JAR_NAME &amp;
+
+                                        exit 0</execCommand>
+                                    <execTimeout>120000</execTimeout>
+                                    <usePty>false</usePty>
+                                    <useAgentForwarding>false</useAgentForwarding>
+                                </jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                            </transfers>
+                            <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+                            <usePromotionTimestamp>false</usePromotionTimestamp>
+                        </jenkins.plugins.publish__over__ssh.BapSshPublisher>
+                    </publishers>
+                    <continueOnError>false</continueOnError>
+                    <failOnError>false</failOnError>
+                    <alwaysPublishFromMaster>false</alwaysPublishFromMaster>
+                    <hostConfigurationAccess class="jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin" reference="../.."/>
+                </delegate>
+            </delegate>
+        </jenkins.plugins.publish__over__ssh.BapSshBuilderPlugin>
+    </builders>
+    <publishers/>
+    <buildWrappers/>
+</project>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shop.mall.biz.dao.OrderAccountDao">
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.biz.entity.OrderAccountEntity"
+            useGeneratedKeys="true">
+        insert into order_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                unique_id,
+            </if>
+            <if test="orderUniqueId != null">
+                order_unique_id,
+            </if>
+            <if test="goodsUniqueId != null">
+                goods_unique_id,
+            </if>
+            <if test="goodsSkuUniqueId != null">
+                goods_sku_unique_id,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="goodsInformation != null">
+                goods_information,
+            </if>
+            <if test="accountRemark != null">
+                account_remark,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                #{uniqueId},
+            </if>
+            <if test="orderUniqueId != null">
+                #{orderUniqueId},
+            </if>
+            <if test="goodsUniqueId != null">
+                #{goodsUniqueId},
+            </if>
+            <if test="goodsSkuUniqueId != null">
+                #{goodsSkuUniqueId},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="goodsInformation != null">
+                #{goodsInformation},
+            </if>
+            <if test="accountRemark != null">
+                #{accountRemark},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="cn.shop.mall.biz.entity.OrderAccountEntity">
+        update order_account
+        <set>
+            <if test="uniqueId != null">
+                unique_id = #{uniqueId},
+            </if>
+            <if test="orderUniqueId != null">
+                order_unique_id = #{orderUniqueId},
+            </if>
+            <if test="goodsUniqueId != null">
+                goods_unique_id = #{goodsUniqueId},
+            </if>
+            <if test="goodsSkuUniqueId != null">
+                goods_sku_unique_id = #{goodsSkuUniqueId},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="goodsInformation != null">
+                goods_information = #{goodsInformation},
+            </if>
+            <if test="accountRemark != null">
+                account_remark = #{accountRemark},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

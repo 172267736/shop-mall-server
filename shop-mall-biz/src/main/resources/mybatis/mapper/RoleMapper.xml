@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shop.mall.biz.dao.RoleDao">
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.biz.entity.RoleEntity"
+            useGeneratedKeys="true">
+        insert into role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                unique_id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                #{uniqueId},
+            </if>
+            <if test="roleName != null">
+                #{roleName},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="cn.shop.mall.biz.entity.RoleEntity">
+        update role
+        <set>
+            <if test="uniqueId != null">
+                unique_id = #{uniqueId},
+            </if>
+            <if test="roleName != null">
+                role_name = #{roleName},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

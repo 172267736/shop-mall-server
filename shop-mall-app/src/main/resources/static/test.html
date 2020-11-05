@@ -1,0 +1,60 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="./echarts.min.js"></script>
+    <script src="./jquery-3.5.0.min.js"></script>
+</head>
+<body>
+<div id='a45e6d41-c4e1-4b5f-9c50-5629b7cd7649' class='initChart'
+     style='width:600px;height:400px;border:1px solid black;'></div>
+<div id='7edced4c-a666-41f4-8299-d14954e1c3b6' class='initChart'
+     style='width:600px;height:400px;border:1px solid black;'></div>
+<div id='8998a263-ac8a-4a85-b741-5f027ad9ab93' class='initChart'
+     style='width:600px;height:400px;border:1px solid black;'></div>
+<div id='b1e26ce1-32b6-475c-8663-5efa06c88d58' class='initNumber'
+     style='width: 120px;height:25px;border:1px solid black;'></div>
+<div id='c6e6c5e0-e9ef-49e8-99cf-6d9d3573ab17' class='initNumber'
+     style='width: 120px;height:25px;border:1px solid black;'></div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var token = "eyJhbGciOiJIUzI1NiJ9.eyJvcmdhbml6YXRpb25JZCI6IjEwMDEwMTAwMDQ0MCIsImV4dCI6MTYxODk2OTU2Nzg0OCwidWlkIjoiMTAxMDAwMDAwMjQ2IiwidmFsaWRTdGF0ZSI6MTA0NDA2LCJyb2xlSWQiOlsxMDAwMDAxMTAyNzhdLCJ2YWxpZFRpbWUiOm51bGwsIm9wdENlbnRlcklkIjoiMTAwMTAwMDAwMjI4IiwidXNlclR5cGUiOjEwMDcwMiwiaWF0IjoxNTg3NDMzNTY3ODQ4fQ.8Ip98wf3WxOIxTiZAr53w_0ImIPiaZra5UysJ9goHWg";
+        $.ajax({
+            type: "GET",
+            headers: {'Authorization': token},
+            url: "/apiDpanel/dpanel/v1/model/detail?modelId=5",
+            success: function (result) {
+                $("body").html(result.data.model.modelCode);
+                $("div").each(function () {
+                    var id = $(this).attr('id');
+                    var initType = $(this).attr('class');
+                    $.ajax({
+                        type: "GET",
+                        headers: {'Content-Type': 'application/json;charset=utf8', 'Authorization': token},
+                        url: "/apiDpanel/dpanel/v1/converter/getData?addressFlag=" + id,
+                        success: function (result) {
+                            if (initType == "initNumber") {
+                                var obj = result.data.in.
+                                $("#" + id).html(title+result.data.out.number);
+                            } else if (initType == "initChart") {
+                                var myChart = echarts.init(document.getElementById(id));
+                                myChart.setOption(result.data.out);
+                            }
+                        },
+                        error: function (e) {
+                            console.log(e.status);
+                            console.log(e.responseText);
+                        }
+                    });
+                });
+            },
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+
+
+    })
+</script>
+</html>

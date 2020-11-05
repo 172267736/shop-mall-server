@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shop.mall.biz.dao.GoodsDao">
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.biz.entity.GoodsEntity"
+            useGeneratedKeys="true">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                unique_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="bigImgs != null">
+                big_imgs,
+            </if>
+            <if test="goodsContent != null">
+                goods_content,
+            </if>
+            <if test="goodsVideo != null">
+                goods_video,
+            </if>
+            <if test="goodsDescription != null">
+                goods_description,
+            </if>
+            <if test="belongClassifyIds != null">
+                belong_classify_ids,
+            </if>
+            <if test="goodsTags != null">
+                goods_tags,
+            </if>
+            <if test="topSort != null">
+                top_sort,
+            </if>
+            <if test="originalPrice != null">
+                original_price,
+            </if>
+            <if test="currentPrice != null">
+                current_price,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                #{uniqueId},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName},
+            </if>
+            <if test="bigImgs != null">
+                #{bigImgs},
+            </if>
+            <if test="goodsContent != null">
+                #{goodsContent},
+            </if>
+            <if test="goodsVideo != null">
+                #{goodsVideo},
+            </if>
+            <if test="goodsDescription != null">
+                #{goodsDescription},
+            </if>
+            <if test="belongClassifyIds != null">
+                #{belongClassifyIds},
+            </if>
+            <if test="goodsTags != null">
+                #{goodsTags},
+            </if>
+            <if test="topSort != null">
+                #{topSort},
+            </if>
+            <if test="originalPrice != null">
+                #{originalPrice},
+            </if>
+            <if test="currentPrice != null">
+                #{currentPrice},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="cn.shop.mall.biz.entity.GoodsEntity">
+        update goods
+        <set>
+            <if test="uniqueId != null">
+                unique_id = #{uniqueId},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName},
+            </if>
+            <if test="bigImgs != null">
+                big_imgs = #{bigImgs},
+            </if>
+            <if test="goodsContent != null">
+                goods_content = #{goodsContent},
+            </if>
+            <if test="goodsVideo != null">
+                goods_video = #{goodsVideo},
+            </if>
+            <if test="goodsDescription != null">
+                goods_description = #{goodsDescription},
+            </if>
+            <if test="belongClassifyIds != null">
+                belong_classify_ids = #{belongClassifyIds},
+            </if>
+            <if test="goodsTags != null">
+                goods_tags = #{goodsTags},
+            </if>
+            <if test="topSort != null">
+                top_sort = #{topSort},
+            </if>
+            <if test="originalPrice != null">
+                original_price = #{originalPrice},
+            </if>
+            <if test="currentPrice != null">
+                current_price = #{currentPrice},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
