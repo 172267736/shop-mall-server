@@ -1,10 +1,10 @@
 package cn.shop.mall.admin.service.impl;
 
 import cn.shop.mall.admin.service.RoleService;
-import cn.shop.mall.biz.dao.MenuRoleDao;
-import cn.shop.mall.biz.dao.RoleDao;
-import cn.shop.mall.biz.entity.MenuRoleEntity;
-import cn.shop.mall.biz.entity.RoleEntity;
+import cn.shop.mall.center.dao.MenuRoleDao;
+import cn.shop.mall.center.dao.RoleDao;
+import cn.shop.mall.center.entity.MenuRoleEntity;
+import cn.shop.mall.center.entity.RoleEntity;
 import cn.shop.mall.common.model.PageDto;
 import cn.shop.mall.common.vo.ResponseVO;
 import com.google.common.collect.Lists;

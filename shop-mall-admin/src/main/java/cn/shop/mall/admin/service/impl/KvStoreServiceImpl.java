@@ -1,8 +1,8 @@
 package cn.shop.mall.admin.service.impl;
 
 import cn.shop.mall.admin.service.KvStoreService;
-import cn.shop.mall.biz.dao.KvStoreDao;
-import cn.shop.mall.biz.entity.KvStoreEntity;
+import cn.shop.mall.center.dao.KvStoreDao;
+import cn.shop.mall.center.entity.KvStoreEntity;
 import cn.shop.mall.common.model.PageDto;
 import cn.shop.mall.common.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;

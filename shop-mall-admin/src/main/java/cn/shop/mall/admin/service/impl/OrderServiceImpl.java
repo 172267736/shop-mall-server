@@ -1,10 +1,10 @@
 package cn.shop.mall.admin.service.impl;
 
 import cn.shop.mall.admin.service.OrderService;
-import cn.shop.mall.biz.dao.OrderAccountDao;
-import cn.shop.mall.biz.dao.OrderDao;
-import cn.shop.mall.biz.entity.OrderAccountEntity;
-import cn.shop.mall.biz.entity.OrderEntity;
+import cn.shop.mall.center.dao.OrderAccountDao;
+import cn.shop.mall.center.dao.OrderDao;
+import cn.shop.mall.center.entity.OrderAccountEntity;
+import cn.shop.mall.center.entity.OrderEntity;
 import cn.shop.mall.common.model.PageDto;
 import cn.shop.mall.common.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;

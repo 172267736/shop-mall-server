@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shop.mall.center.dao.EventTrackDao">
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.center.entity.EventTrackEntity"
+            useGeneratedKeys="true">
+        insert into event_track
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                unique_id,
+            </if>
+            <if test="eventWho != null">
+                event_who,
+            </if>
+            <if test="eventDo != null">
+                event_do,
+            </if>
+            <if test="eventWhen != null">
+                event_when,
+            </if>
+            <if test="eventVersion != null">
+                event_version,
+            </if>
+            <if test="eventSource != null">
+                event_source,
+            </if>
+            <if test="eventDescription != null">
+                event_description,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                #{uniqueId},
+            </if>
+            <if test="eventWho != null">
+                #{eventWho},
+            </if>
+            <if test="eventDo != null">
+                #{eventDo},
+            </if>
+            <if test="eventWhen != null">
+                #{eventWhen},
+            </if>
+            <if test="eventVersion != null">
+                #{eventVersion},
+            </if>
+            <if test="eventSource != null">
+                #{eventSource},
+            </if>
+            <if test="eventDescription != null">
+                #{eventDescription},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="cn.shop.mall.center.entity.EventTrackEntity">
+        update event_track
+        <set>
+            <if test="uniqueId != null">
+                unique_id = #{uniqueId},
+            </if>
+            <if test="eventWho != null">
+                event_who = #{eventWho},
+            </if>
+            <if test="eventDo != null">
+                event_do = #{eventDo},
+            </if>
+            <if test="eventWhen != null">
+                event_when = #{eventWhen},
+            </if>
+            <if test="eventVersion != null">
+                event_version = #{eventVersion},
+            </if>
+            <if test="eventSource != null">
+                event_source = #{eventSource},
+            </if>
+            <if test="eventDescription != null">
+                event_description = #{eventDescription},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

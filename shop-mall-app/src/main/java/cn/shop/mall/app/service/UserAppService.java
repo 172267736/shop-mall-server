@@ -1,6 +1,6 @@
 package cn.shop.mall.app.service;
 
-import cn.shop.mall.biz.entity.UserAppEntity;
+import cn.shop.mall.center.entity.UserAppEntity;
 
 public interface UserAppService {
 

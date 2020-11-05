@@ -1,8 +1,8 @@
 package cn.shop.mall.admin.service.impl;
 
 import cn.shop.mall.admin.service.EventTrackService;
-import cn.shop.mall.biz.dao.EventTrackDao;
-import cn.shop.mall.biz.entity.EventTrackEntity;
+import cn.shop.mall.center.dao.EventTrackDao;
+import cn.shop.mall.center.entity.EventTrackEntity;
 import cn.shop.mall.common.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package cn.shop.mall.admin.service.impl;
 
 import cn.shop.mall.admin.service.MenuService;
-import cn.shop.mall.biz.dao.MenuDao;
-import cn.shop.mall.biz.entity.MenuEntity;
+import cn.shop.mall.center.dao.MenuDao;
+import cn.shop.mall.center.entity.MenuEntity;
 import cn.shop.mall.common.model.PageDto;
 import cn.shop.mall.common.model.UserHeader;
 import cn.shop.mall.common.vo.ResponseVO;

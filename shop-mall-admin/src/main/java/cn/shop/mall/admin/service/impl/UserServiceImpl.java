@@ -2,12 +2,12 @@ package cn.shop.mall.admin.service.impl;
 
 import cn.shop.mall.admin.event.EventTrack;
 import cn.shop.mall.admin.service.UserService;
-import cn.shop.mall.biz.dao.MenuDao;
-import cn.shop.mall.biz.dao.RoleUserDao;
-import cn.shop.mall.biz.dao.UserAdminDao;
-import cn.shop.mall.biz.entity.MenuEntity;
-import cn.shop.mall.biz.entity.RoleUserEntity;
-import cn.shop.mall.biz.entity.UserAdminEntity;
+import cn.shop.mall.center.dao.MenuDao;
+import cn.shop.mall.center.dao.RoleUserDao;
+import cn.shop.mall.center.dao.UserAdminDao;
+import cn.shop.mall.center.entity.MenuEntity;
+import cn.shop.mall.center.entity.RoleUserEntity;
+import cn.shop.mall.center.entity.UserAdminEntity;
 import cn.shop.mall.common.enums.CodeMsgEnum;
 import cn.shop.mall.common.enums.EventTrackEnum;
 import cn.shop.mall.common.enums.MenuTypeEnum;

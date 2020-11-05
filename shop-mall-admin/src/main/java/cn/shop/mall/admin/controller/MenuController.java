@@ -1,7 +1,7 @@
 package cn.shop.mall.admin.controller;
 
 import cn.shop.mall.admin.service.MenuService;
-import cn.shop.mall.biz.entity.MenuEntity;
+import cn.shop.mall.center.entity.MenuEntity;
 import cn.shop.mall.common.model.CurrentAuthorization;
 import cn.shop.mall.common.model.UserBean;
 import cn.shop.mall.common.vo.ResponseVO;

@@ -1,6 +1,6 @@
 package cn.shop.mall.admin.service;
 
-import cn.shop.mall.biz.entity.MenuEntity;
+import cn.shop.mall.center.entity.MenuEntity;
 import cn.shop.mall.common.vo.ResponseVO;
 
 public interface MenuService {

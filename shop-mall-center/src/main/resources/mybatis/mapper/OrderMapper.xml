@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shop.mall.center.dao.OrderDao">
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.center.entity.OrderEntity"
+            useGeneratedKeys="true">
+        insert into order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                unique_id,
+            </if>
+            <if test="orderNumber != null">
+                order_number,
+            </if>
+            <if test="thirdpartOrderNumber != null">
+                thirdpart_order_number,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="expireState != null">
+                expire_state,
+            </if>
+            <if test="payUserUniqueId != null">
+                pay_user_unique_id,
+            </if>
+            <if test="shouldPayMoney != null">
+                should_pay_money,
+            </if>
+            <if test="actualPayMoney != null">
+                actual_pay_money,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="payResultDescription != null">
+                pay_result_description,
+            </if>
+            <if test="payOverTime != null">
+                pay_over_time,
+            </if>
+            <if test="allocationAddressUniqueId != null">
+                allocation_address_unique_id,
+            </if>
+            <if test="orderRemark != null">
+                order_remark,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uniqueId != null">
+                #{uniqueId},
+            </if>
+            <if test="orderNumber != null">
+                #{orderNumber},
+            </if>
+            <if test="thirdpartOrderNumber != null">
+                #{thirdpartOrderNumber},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="expireState != null">
+                #{expireState},
+            </if>
+            <if test="payUserUniqueId != null">
+                #{payUserUniqueId},
+            </if>
+            <if test="shouldPayMoney != null">
+                #{shouldPayMoney},
+            </if>
+            <if test="actualPayMoney != null">
+                #{actualPayMoney},
+            </if>
+            <if test="payType != null">
+                #{payType},
+            </if>
+            <if test="payResultDescription != null">
+                #{payResultDescription},
+            </if>
+            <if test="payOverTime != null">
+                #{payOverTime},
+            </if>
+            <if test="allocationAddressUniqueId != null">
+                #{allocationAddressUniqueId},
+            </if>
+            <if test="orderRemark != null">
+                #{orderRemark},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="cn.shop.mall.center.entity.OrderEntity">
+        update order
+        <set>
+            <if test="uniqueId != null">
+                unique_id = #{uniqueId},
+            </if>
+            <if test="orderNumber != null">
+                order_number = #{orderNumber},
+            </if>
+            <if test="thirdpartOrderNumber != null">
+                thirdpart_order_number = #{thirdpartOrderNumber},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="expireState != null">
+                expire_state = #{expireState},
+            </if>
+            <if test="payUserUniqueId != null">
+                pay_user_unique_id = #{payUserUniqueId},
+            </if>
+            <if test="shouldPayMoney != null">
+                should_pay_money = #{shouldPayMoney},
+            </if>
+            <if test="actualPayMoney != null">
+                actual_pay_money = #{actualPayMoney},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType},
+            </if>
+            <if test="payResultDescription != null">
+                pay_result_description = #{payResultDescription},
+            </if>
+            <if test="payOverTime != null">
+                pay_over_time = #{payOverTime},
+            </if>
+            <if test="allocationAddressUniqueId != null">
+                allocation_address_unique_id = #{allocationAddressUniqueId},
+            </if>
+            <if test="orderRemark != null">
+                order_remark = #{orderRemark},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

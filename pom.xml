@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.shop.mall</groupId>
-    <artifactId>shop-mall</artifactId>
+    <artifactId>shop-mall-server</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
@@ -19,7 +19,7 @@
         <module>shop-mall-admin</module>
         <module>shop-mall-app</module>
         <module>shop-mall-common</module>
-        <module>shop-mall-biz</module>
+        <module>shop-mall-center</module>
     </modules>
 
     <dependencyManagement>
