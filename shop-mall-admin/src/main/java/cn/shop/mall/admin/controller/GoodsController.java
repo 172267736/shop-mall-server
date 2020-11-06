@@ -34,7 +34,6 @@ public class GoodsController {
                                @ApiParam(value = "父编号") @RequestParam(required = false) Long classifyParentId,
                                @ApiParam(value = "分类图标") @RequestParam(required = false) String classifyIcon,
                                @ApiParam(value = "分类说明") @RequestParam(required = false) String classifyDescription) {
-
         return goodsService.saveType(classifyName, classifyParentId, classifyIcon, classifyDescription);
     }
 
@@ -45,7 +44,7 @@ public class GoodsController {
     }
 
     @ApiOperation("更新商品")
-    @PostMapping("/goods/update")
+    @PostMapping("/update")
     public ResponseVO update(@RequestBody GoodsParam goodsParam) {
         return goodsService.update(goodsParam);
     }

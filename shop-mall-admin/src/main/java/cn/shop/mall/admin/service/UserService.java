@@ -8,7 +8,7 @@ public interface UserService {
 
     ResponseVO loginOut(String token);
 
-    ResponseVO list();
+    ResponseVO list(Integer limit, Integer page, String userName);
 
     ResponseVO delete(Long id);
 

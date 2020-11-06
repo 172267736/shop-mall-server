@@ -36,8 +36,10 @@ public class UserController {
 
     @ApiOperation("用户列表")
     @GetMapping("/list")
-    public ResponseVO list() {
-        return userService.list();
+    public ResponseVO list(@ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
+                           @ApiParam(value = "每页条数", required = true) @RequestParam Integer page,
+                           @ApiParam(value = "用户名") @RequestParam(required = false) String userName) {
+        return userService.list(limit, page, userName);
     }
 
     @ApiOperation("用户删除")

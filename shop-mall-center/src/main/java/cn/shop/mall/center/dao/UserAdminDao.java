@@ -2,6 +2,7 @@ package cn.shop.mall.center.dao;
 
 import cn.shop.mall.center.entity.UserAdminEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,12 +18,12 @@ public interface UserAdminDao {
 
     UserAdminEntity getByUserName(String userName);
 
-    List<UserAdminEntity> list();
+    List<UserAdminEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset, @Param("userName") String userName);
 
     Integer deleteById(Long id);
 
     UserAdminEntity getById(Long id);
 
-    Long count();
+    Long count(@Param("userName") String userName);
 
 }

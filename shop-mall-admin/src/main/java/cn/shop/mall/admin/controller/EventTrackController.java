@@ -35,4 +35,10 @@ public class EventTrackController {
         return eventTrackService.save(eventSource, what, who, version, description);
     }
 
+    @ApiOperation("埋点列表")
+    @PostMapping("/list")
+    public ResponseVO list() {
+        return eventTrackService.list();
+    }
+
 }

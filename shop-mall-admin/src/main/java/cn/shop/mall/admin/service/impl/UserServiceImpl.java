@@ -90,12 +90,13 @@ public class UserServiceImpl implements UserService {
      * 用户列表
      */
     @Override
-    public ResponseVO list() {
-        Long count = userAdminDao.count();
+    public ResponseVO list(Integer limit, Integer page, String userName) {
+        Long count = userAdminDao.count(userName);
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        List<UserAdminEntity> list = userAdminDao.list();
+        Integer offset = (page - 1) * limit;
+        List<UserAdminEntity> list = userAdminDao.list(limit, offset, userName);
         return ResponseVO.SUCCESS(new PageDto<>(list, count));
     }
 

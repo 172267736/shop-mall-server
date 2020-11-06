@@ -112,4 +112,23 @@
     <select id="getByUserName" resultType="cn.shop.mall.center.entity.UserAdminEntity">
         select * from user_admin where user_name = #{userName}
     </select>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.UserAdminEntity">
+        select * from user_admin
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+        </where>
+        limit (#{offset},#{limit})
+    </select>
+
+    <select id="count" resultType="cn.shop.mall.center.entity.UserAdminEntity">
+        select count(1) from user_admin
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+        </where>
+    </select>
 </mapper>
