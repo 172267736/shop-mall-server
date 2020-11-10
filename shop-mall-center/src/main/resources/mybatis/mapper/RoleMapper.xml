@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.shop.mall.center.dao.RoleDao">
 
-    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.center.entity.RoleEntity"
+    <insert id="save" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.RoleEntity"
             useGeneratedKeys="true">
         insert into role
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -12,6 +12,9 @@
             </if>
             <if test="roleName != null">
                 role_name,
+            </if>
+            <if test="roleRemark != null">
+                role_remark,
             </if>
             <if test="deleted != null">
                 deleted,
@@ -30,6 +33,9 @@
             <if test="roleName != null">
                 #{roleName},
             </if>
+            <if test="roleRemark != null">
+                #{roleRemark},
+            </if>
             <if test="deleted != null">
                 #{deleted},
             </if>
@@ -45,11 +51,11 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.RoleEntity">
         update role
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="roleName != null">
                 role_name = #{roleName},
+            </if>
+            <if test="roleRemark != null">
+                role_remark = #{roleRemark},
             </if>
             <if test="deleted != null">
                 deleted = #{deleted},
@@ -61,6 +67,40 @@
                 update_date = #{updateDate},
             </if>
         </set>
-        where id = #{id}
+        where unique_id = #{uniqueId}
+    </update>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.RoleEntity">
+        select * from role
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and role_name like concat('%', #{roleName}, '%')
+            </if>
+        </where>
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from role
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and role_name like concat('%', #{roleName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.RoleEntity">
+        select * from role
+        where deleted = 0 and unique_id = #{uniqueId}
+    </select>
+
+    <update id="deleteById">
+        update role set deleted = 1 where unique_id = #{uniqueId}
     </update>
 </mapper>

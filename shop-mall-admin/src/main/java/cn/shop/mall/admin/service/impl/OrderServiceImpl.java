@@ -22,13 +22,14 @@ public class OrderServiceImpl implements OrderService {
     private OrderAccountDao orderAccountDao;
 
     @Override
-    public ResponseVO list() {
+    public ResponseVO list(Integer limit, Integer page) {
         Long count = orderDao.count();
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        List<OrderEntity> list = orderDao.list();
-        return ResponseVO.SUCCESS(new PageDto<>(list, count));
+        Integer offset = (page - 1) * limit;
+        List<OrderEntity> list = orderDao.list(limit, offset);
+        return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
     }
 
     @Override

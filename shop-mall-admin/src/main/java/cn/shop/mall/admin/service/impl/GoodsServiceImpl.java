@@ -1,5 +1,6 @@
 package cn.shop.mall.admin.service.impl;
 
+import cn.shop.mall.admin.model.GoodsClassifyParam;
 import cn.shop.mall.admin.model.GoodsParam;
 import cn.shop.mall.admin.service.GoodsService;
 import cn.shop.mall.center.dao.GoodsClassifyDao;
@@ -43,32 +44,34 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsSkuDao goodsSkuDao;
 
     @Override
-    public ResponseVO list() {
+    public ResponseVO list(Integer limit, Integer page) {
         Long count = goodsDao.count();
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        List<GoodsEntity> list = goodsDao.list();
-        return ResponseVO.SUCCESS(new PageDto<>(list, count));
+        Integer offset = (page - 1) * limit;
+        List<GoodsEntity> list = goodsDao.list(limit, offset);
+        return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
     }
 
     @Override
-    public ResponseVO listType() {
+    public ResponseVO listType(Integer limit, Integer page) {
         Long count = goodsClassifyDao.count();
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        List<GoodsClassifyEntity> list = goodsClassifyDao.list();
-        return ResponseVO.SUCCESS(new PageDto<>(list, count));
+        Integer offset = (page - 1) * limit;
+        List<GoodsClassifyEntity> list = goodsClassifyDao.list(limit, offset);
+        return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
     }
 
     @Override
-    public ResponseVO saveType(String classifyName, Long classifyParentId, String classifyIcon, String classifyDescription) {
+    public ResponseVO saveType(GoodsClassifyParam goodsClassifyParam) {
         GoodsClassifyEntity goodsClassifyEntity = new GoodsClassifyEntity();
-        goodsClassifyEntity.setClassifyName(classifyName);
-        goodsClassifyEntity.setClassifyDescription(classifyDescription);
-        goodsClassifyEntity.setClassifyParentId(classifyParentId);
-        goodsClassifyEntity.setClassifyIcon(classifyIcon);
+        goodsClassifyEntity.setClassifyName(goodsClassifyParam.getClassifyName());
+        goodsClassifyEntity.setClassifyDescription(goodsClassifyParam.getClassifyDescription());
+        goodsClassifyEntity.setClassifyParentId(goodsClassifyParam.getClassifyParentId());
+        goodsClassifyEntity.setClassifyIcon(goodsClassifyParam.getClassifyIcon());
         goodsClassifyDao.save(goodsClassifyEntity);
         return ResponseVO.SUCCESS();
     }

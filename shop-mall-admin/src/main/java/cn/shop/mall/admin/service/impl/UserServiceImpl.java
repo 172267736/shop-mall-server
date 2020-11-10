@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
         }
         Integer offset = (page - 1) * limit;
         List<UserAdminEntity> list = userAdminDao.list(limit, offset, userName);
-        return ResponseVO.SUCCESS(new PageDto<>(list, count));
+        return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
     }
 
     /**

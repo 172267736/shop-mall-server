@@ -19,4 +19,6 @@ public interface MenuRoleDao {
 
     Integer deleteByRoleId(Long roleId);
 
+    List<MenuRoleEntity> listByRoleId(Long roleId);
+
 }

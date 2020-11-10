@@ -9,6 +9,10 @@ import java.util.List;
  */
 public class MenuExtend {
 
+    private String name;
+
+    private String parentMenuName;
+
     private List<MenuEntity> child;
 
     public List<MenuEntity> getChild() {
@@ -17,5 +21,21 @@ public class MenuExtend {
 
     public void setChild(List<MenuEntity> child) {
         this.child = child;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParentMenuName() {
+        return parentMenuName;
+    }
+
+    public void setParentMenuName(String parentMenuName) {
+        this.parentMenuName = parentMenuName;
     }
 }

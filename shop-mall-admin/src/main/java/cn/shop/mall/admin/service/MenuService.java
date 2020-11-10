@@ -1,16 +1,22 @@
 package cn.shop.mall.admin.service;
 
-import cn.shop.mall.center.entity.MenuEntity;
+import cn.shop.mall.admin.model.MenuParam;
 import cn.shop.mall.common.vo.ResponseVO;
 
 public interface MenuService {
 
     ResponseVO listByUser(String userName, Long userId);
 
-    ResponseVO list();
+    ResponseVO list(Integer limit, Integer page, String menuName, Integer menuType);
 
-    ResponseVO save(MenuEntity menuEntity);
+    ResponseVO listAll();
 
-    ResponseVO update(MenuEntity menuEntity);
+    ResponseVO detail(Long id);
+
+    ResponseVO save(MenuParam menuParam);
+
+    ResponseVO update(MenuParam menuParam);
+
+    ResponseVO delete(Long id);
 
 }

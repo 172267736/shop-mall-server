@@ -2,6 +2,7 @@ package cn.shop.mall.center.dao;
 
 import cn.shop.mall.center.entity.GoodsEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface GoodsDao {
 
     GoodsEntity getById(Long id);
 
-    List<GoodsEntity> list();
+    List<GoodsEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     Long count();
 

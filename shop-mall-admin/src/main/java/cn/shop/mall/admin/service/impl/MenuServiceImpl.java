@@ -1,5 +1,6 @@
 package cn.shop.mall.admin.service.impl;
 
+import cn.shop.mall.admin.model.MenuParam;
 import cn.shop.mall.admin.service.MenuService;
 import cn.shop.mall.center.dao.MenuDao;
 import cn.shop.mall.center.entity.MenuEntity;
@@ -60,26 +61,57 @@ public class MenuServiceImpl implements MenuService {
      * 菜单列表
      */
     @Override
-    public ResponseVO list() {
-        Long count = menuDao.count();
+    public ResponseVO list(Integer limit, Integer page, String menuName, Integer menuType) {
+        Long count = menuDao.count(menuName, menuType);
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        List<MenuEntity> list = menuDao.list();
-        return ResponseVO.SUCCESS(new PageDto<>(list, count));
+        Integer offset = (page - 1) * limit;
+        List<MenuEntity> list = menuDao.list(limit, offset, menuName, menuType);
+        return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
+    }
+
+    /**
+     * 菜单列表
+     */
+    @Override
+    public ResponseVO listAll() {
+        return ResponseVO.SUCCESS(menuDao.listAll());
+    }
+
+    @Override
+    public ResponseVO detail(Long id) {
+        return ResponseVO.SUCCESS(menuDao.getById(id));
+    }
+
+    @Override
+    public ResponseVO delete(Long id) {
+        return ResponseVO.SUCCESS(menuDao.deleteById(id));
     }
 
     /**
      * 添加菜单
      */
     @Override
-    public ResponseVO save(MenuEntity menuEntity) {
+    public ResponseVO save(MenuParam menuParam) {
+        MenuEntity menuEntity = new MenuEntity();
+        menuEntity.setIcon(menuParam.getIcon());
+        menuEntity.setMenuName(menuParam.getMenuName());
+        menuEntity.setMenuUrl(menuParam.getMenuUrl());
+        menuEntity.setMenuType(menuParam.getMenuType());
+        menuEntity.setParentUniqueId(menuEntity.getParentUniqueId());
         menuDao.save(menuEntity);
         return ResponseVO.SUCCESS();
     }
 
     @Override
-    public ResponseVO update(MenuEntity menuEntity) {
+    public ResponseVO update(MenuParam menuParam) {
+        MenuEntity menuEntity = menuDao.getById(menuParam.getUniqueId());
+        menuEntity.setIcon(menuParam.getIcon());
+        menuEntity.setMenuName(menuParam.getMenuName());
+        menuEntity.setMenuUrl(menuParam.getMenuUrl());
+        menuEntity.setMenuType(menuParam.getMenuType());
+        menuEntity.setParentUniqueId(menuParam.getParentUniqueId());
         menuDao.update(menuEntity);
         return ResponseVO.SUCCESS();
     }

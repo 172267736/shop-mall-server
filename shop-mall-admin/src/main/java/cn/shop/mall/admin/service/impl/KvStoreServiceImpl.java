@@ -1,5 +1,6 @@
 package cn.shop.mall.admin.service.impl;
 
+import cn.shop.mall.admin.model.KvStoreParam;
 import cn.shop.mall.admin.service.KvStoreService;
 import cn.shop.mall.center.dao.KvStoreDao;
 import cn.shop.mall.center.entity.KvStoreEntity;
@@ -17,28 +18,28 @@ public class KvStoreServiceImpl implements KvStoreService {
     private KvStoreDao kvStoreDao;
 
     @Override
-    public ResponseVO save(String key, String firstName, String lastName, String value, String keyDescription) {
-        if (kvStoreDao.getByKey(key) != null) {
+    public ResponseVO save(KvStoreParam kvStoreParam) {
+        if (kvStoreDao.getByKey(kvStoreParam.getKey()) != null) {
             return ResponseVO.FAIL("当前键值对已经存在");
         }
         KvStoreEntity kvStoreEntity = new KvStoreEntity();
-        kvStoreEntity.setKey(key);
-        kvStoreEntity.setFirstName(firstName);
-        kvStoreEntity.setLastName(lastName);
-        kvStoreEntity.setValue(value);
-        kvStoreEntity.setKeyDescription(keyDescription);
+        kvStoreEntity.setKey(kvStoreParam.getKey());
+        kvStoreEntity.setFirstName(kvStoreParam.getFirstName());
+        kvStoreEntity.setLastName(kvStoreParam.getLastName());
+        kvStoreEntity.setValue(kvStoreParam.getValue());
+        kvStoreEntity.setKeyDescription(kvStoreParam.getKeyDescription());
         kvStoreDao.save(kvStoreEntity);
         return ResponseVO.SUCCESS();
     }
 
     @Override
-    public ResponseVO update(Long id, String firstName, String lastName, String value, String keyDescription) {
-        KvStoreEntity kvStoreEntity = kvStoreDao.getById(id);
+    public ResponseVO update(KvStoreParam kvStoreParam) {
+        KvStoreEntity kvStoreEntity = kvStoreDao.getById(kvStoreParam.getUniqueId());
         if (kvStoreEntity != null) {
-            kvStoreEntity.setFirstName(firstName);
-            kvStoreEntity.setLastName(lastName);
-            kvStoreEntity.setValue(value);
-            kvStoreEntity.setKeyDescription(keyDescription);
+            kvStoreEntity.setFirstName(kvStoreParam.getFirstName());
+            kvStoreEntity.setLastName(kvStoreParam.getLastName());
+            kvStoreEntity.setValue(kvStoreParam.getValue());
+            kvStoreEntity.setKeyDescription(kvStoreParam.getKeyDescription());
             kvStoreDao.update(kvStoreEntity);
         }
         return ResponseVO.SUCCESS();
@@ -51,12 +52,13 @@ public class KvStoreServiceImpl implements KvStoreService {
     }
 
     @Override
-    public ResponseVO list() {
+    public ResponseVO list(Integer limit, Integer page) {
         Long count = kvStoreDao.count();
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        List<KvStoreEntity> list = kvStoreDao.list();
-        return ResponseVO.SUCCESS(new PageDto<>(list, count));
+        Integer offset = (page - 1) * limit;
+        List<KvStoreEntity> list = kvStoreDao.list(limit, offset);
+        return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
     }
 }

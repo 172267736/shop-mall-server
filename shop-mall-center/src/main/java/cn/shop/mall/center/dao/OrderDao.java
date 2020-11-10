@@ -2,6 +2,7 @@ package cn.shop.mall.center.dao;
 
 import cn.shop.mall.center.entity.OrderEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface OrderDao {
 
     Integer update(OrderEntity orderEntity);
 
-    List<OrderEntity> list();
+    List<OrderEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     OrderEntity getById(Long id);
 

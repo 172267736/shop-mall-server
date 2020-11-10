@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.shop.mall.center.dao.MenuDao">
 
-    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.center.entity.MenuEntity"
+    <insert id="save" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.MenuEntity"
             useGeneratedKeys="true">
         insert into menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -106,14 +106,70 @@
                 update_date = #{updateDate},
             </if>
         </set>
-        where id = #{id}
+        where unique_id = #{uniqueId}
     </update>
 
     <select id="listAllMenu" resultType="cn.shop.mall.center.entity.MenuEntity">
-        select * from menu
+        select * from menu where deleted = 0
+    </select>
+
+    <select id="listAll" resultType="cn.shop.mall.center.entity.MenuEntity">
+        select unique_id as uniqueId,menu_name as name,parent_unique_id as parentUniqueId from menu where deleted = 0
+    </select>
+
+    <select id="listMenuByUserId" resultType="cn.shop.mall.center.entity.MenuEntity">
+        select * from menu where unique_id in
+        (
+            select menu_unique_id from menu_role where role_unique_id in
+            (
+                select role_unique_id from role_user where user_unique_id = #{userId}
+            )
+        )
+        and deleted = 0
     </select>
 
     <select id="listMenuByType" resultType="cn.shop.mall.center.entity.MenuEntity">
-        select * from menu where menu_type = #{menuType}
+        select * from menu where menu_type = #{menuType} and deleted = 0
+    </select>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.MenuEntity">
+        select a.*,b.menu_name as parentMenuName from menu as a left join menu as b on a.parent_unique_id = b.unique_id
+        <where>
+            <if test="true">
+                and a.deleted = 0
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and a.menu_name like concat('%', #{menuName}, '%')
+            </if>
+            <if test="menuType != null and menuType != ''">
+                and a.menu_type = #{menuType}
+            </if>
+        </where>
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.MenuEntity">
+        select a.*,b.menu_name as parentMenuName from menu as a left join menu as b on a.parent_unique_id = b.unique_id
+        where a.unique_id = #{uniqueId}
+        and a.deleted = 0
+    </select>
+
+    <update id="deleteById">
+        update menu set deleted = 1 where unique_id = #{uniqueId}
+    </update>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from menu
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and menu_name like concat('%', #{menuName}, '%')
+            </if>
+            <if test="menuType != null and menuType != ''">
+                and menu_type = #{menuType}
+            </if>
+        </where>
     </select>
 </mapper>

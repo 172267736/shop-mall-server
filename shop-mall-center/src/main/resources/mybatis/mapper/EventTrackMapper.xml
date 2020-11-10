@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.shop.mall.center.dao.EventTrackDao">
 
-    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.center.entity.EventTrackEntity"
+    <insert id="save" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.EventTrackEntity"
             useGeneratedKeys="true">
         insert into event_track
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -106,6 +106,31 @@
                 update_date = #{updateDate},
             </if>
         </set>
-        where id = #{id}
+        where unique_id = #{uniqueId}
     </update>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.EventTrackEntity">
+        select * from event_track
+        <where>
+            <if test="eventDo != null and eventDo != ''">
+                and event_do = #{eventDo}
+            </if>
+            <if test="eventWho != null and eventWho != ''">
+                and event_who = #{eventWho}
+            </if>
+        </where>
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from event_track
+        <where>
+            <if test="eventDo != null and eventDo != ''">
+                and event_do = #{eventDo}
+            </if>
+            <if test="eventWho != null and eventWho != ''">
+                and event_who = #{eventWho}
+            </if>
+        </where>
+    </select>
 </mapper>

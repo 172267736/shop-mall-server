@@ -1,73 +1,92 @@
 package cn.shop.mall.admin.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.List;
 
+@ApiModel("添加或者编辑商品")
 public class GoodsParam {
 
     /**
      * 主键自增
      */
+    @ApiModelProperty(value = "主键自增")
     private Long uniqueId;
 
     /**
      * 商品名称
      */
+    @ApiModelProperty(value = "商品名称")
     private String goodsName;
 
     /**
      * 大图集合
      */
+    @ApiModelProperty(value = "大图集合")
     private String bigImgs;
 
     /**
      * 详情
      */
+    @ApiModelProperty(value = "详情")
     private String goodsContent;
 
     /**
      * 商品视频
      */
+    @ApiModelProperty(value = "商品视频")
     private String goodsVideo;
 
     /**
      * 商品说明
      */
+    @ApiModelProperty(value = "商品说明")
     private String goodsDescription;
 
     /**
      * 所属分类编号
      */
+    @ApiModelProperty(value = "所属分类编号")
     private String belongClassifyIds;
 
     /**
      * 商品标签
      */
+    @ApiModelProperty(value = "商品标签")
     private String goodsTags;
 
     /**
      * 置顶序号
      */
+    @ApiModelProperty(value = "置顶序号")
     private Integer topSort;
 
     /**
      * 商品原价（单位：元）
      */
+    @ApiModelProperty(value = "商品原价（单位：元）")
     private Double originalPrice;
 
     /**
      * 商品现价（单位：元）
      */
+    @ApiModelProperty(value = "商品现价（单位：元）")
     private Double currentPrice;
 
+    @ApiModelProperty(value = "库存单位")
     private String stockUnit;
 
     /**
      * 是否上架（0：否；1：是）
      */
+    @ApiModelProperty(value = "是否上架（0：否；1：是）")
     private Integer status;
 
+    @ApiModelProperty(value = "商品属性信息")
     private List<GoodsPropertyParam> goodsPropertyList;
 
+    @ApiModelProperty(value = "商品库存信息")
     private List<GoodsSkuParam> goodsSkuParamList;
 
     public Long getUniqueId() {

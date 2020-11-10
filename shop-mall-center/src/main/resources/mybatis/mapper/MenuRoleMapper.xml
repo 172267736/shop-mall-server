@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.shop.mall.center.dao.MenuRoleDao">
 
-    <insert id="save" keyColumn="id" keyProperty="id" parameterType="cn.shop.mall.center.entity.MenuRoleEntity"
+    <insert id="save" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.MenuRoleEntity"
             useGeneratedKeys="true">
         insert into menu_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -48,6 +48,53 @@
         </trim>
     </insert>
 
+    <insert id="batchSave" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.MenuRoleEntity"
+            useGeneratedKeys="true">
+        <foreach collection="list" item="item" index="index" separator=";">
+        insert into menu_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.uniqueId != null">
+                unique_id,
+            </if>
+            <if test="item.menuUniqueId != null">
+                menu_unique_id,
+            </if>
+            <if test="item.roleUniqueId != null">
+                role_unique_id,
+            </if>
+            <if test="item.deleted != null">
+                deleted,
+            </if>
+            <if test="item.createDate != null">
+                create_date,
+            </if>
+            <if test="item.updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="item.uniqueId != null">
+                #{item.uniqueId},
+            </if>
+            <if test="item.menuUniqueId != null">
+                #{item.menuUniqueId},
+            </if>
+            <if test="item.roleUniqueId != null">
+                #{item.roleUniqueId},
+            </if>
+            <if test="item.deleted != null">
+                #{item.deleted},
+            </if>
+            <if test="item.createDate != null">
+                #{item.createDate},
+            </if>
+            <if test="item.updateDate != null">
+                #{item.updateDate},
+            </if>
+        </trim>
+        </foreach>
+    </insert>
+
     <update id="update" parameterType="cn.shop.mall.center.entity.MenuRoleEntity">
         update menu_role
         <set>
@@ -70,6 +117,16 @@
                 update_date = #{updateDate},
             </if>
         </set>
-        where id = #{id}
+        where id = #{uniqueId}
     </update>
+
+    <update id="deleteByRoleId">
+        update menu_role
+        set deleted = 1
+        where role_unique_id = #{roleId}
+    </update>
+
+    <select id="listByRoleId" resultType="cn.shop.mall.center.entity.MenuRoleEntity">
+        select * from menu_role where role_unique_id = #{roleId}
+    </select>
 </mapper>

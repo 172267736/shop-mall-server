@@ -1,5 +1,6 @@
 package cn.shop.mall.admin.controller;
 
+import cn.shop.mall.admin.model.GoodsClassifyParam;
 import cn.shop.mall.admin.model.GoodsParam;
 import cn.shop.mall.admin.service.GoodsService;
 import cn.shop.mall.common.vo.ResponseVO;
@@ -24,17 +25,15 @@ public class GoodsController {
 
     @ApiOperation("分类列表")
     @GetMapping("/type/list")
-    public ResponseVO listType() {
-        return goodsService.listType();
+    public ResponseVO listType(@ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
+                               @ApiParam(value = "每页条数", required = true) @RequestParam Integer page) {
+        return goodsService.listType(limit, page);
     }
 
     @ApiOperation("添加分类")
     @PostMapping("/type/save")
-    public ResponseVO saveType(@ApiParam(value = "分类名称", required = true) @RequestParam String classifyName,
-                               @ApiParam(value = "父编号") @RequestParam(required = false) Long classifyParentId,
-                               @ApiParam(value = "分类图标") @RequestParam(required = false) String classifyIcon,
-                               @ApiParam(value = "分类说明") @RequestParam(required = false) String classifyDescription) {
-        return goodsService.saveType(classifyName, classifyParentId, classifyIcon, classifyDescription);
+    public ResponseVO saveType(@RequestBody GoodsClassifyParam goodsClassifyParam) {
+        return goodsService.saveType(goodsClassifyParam);
     }
 
     @ApiOperation("添加商品")

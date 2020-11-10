@@ -1,5 +1,6 @@
 package cn.shop.mall.admin.controller;
 
+import cn.shop.mall.admin.model.KvStoreParam;
 import cn.shop.mall.admin.service.KvStoreService;
 import cn.shop.mall.common.vo.ResponseVO;
 import io.swagger.annotations.Api;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,28 +24,21 @@ public class KvStoreController {
 
     @ApiOperation("字典列表")
     @GetMapping("/list")
-    public ResponseVO list() {
-        return kvStoreService.list();
+    public ResponseVO list(@ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
+                           @ApiParam(value = "每页条数", required = true) @RequestParam Integer page) {
+        return kvStoreService.list(limit, page);
     }
 
     @ApiOperation("字典添加")
     @PostMapping("/save")
-    public ResponseVO save(@ApiParam(value = "键", required = true) @RequestParam String key,
-                           @ApiParam(value = "组名一") @RequestParam(required = false) String firstName,
-                           @ApiParam(value = "组名二") @RequestParam(required = false) String lastName,
-                           @ApiParam(value = "值", required = true) @RequestParam String value,
-                           @ApiParam(value = "说明") @RequestParam(required = false) String keyDescription) {
-        return kvStoreService.save(key, firstName, lastName, value, keyDescription);
+    public ResponseVO save(@RequestBody KvStoreParam kvStoreParam) {
+        return kvStoreService.save(kvStoreParam);
     }
 
     @ApiOperation("字典更新")
     @PostMapping("/update")
-    public ResponseVO update(@ApiParam(value = "键", required = true) @RequestParam Long id,
-                             @ApiParam(value = "组名一") @RequestParam(required = false) String firstName,
-                             @ApiParam(value = "组名二") @RequestParam(required = false) String lastName,
-                             @ApiParam(value = "值", required = true) @RequestParam String value,
-                             @ApiParam(value = "说明") @RequestParam(required = false) String keyDescription) {
-        return kvStoreService.update(id, firstName, lastName, value, keyDescription);
+    public ResponseVO update(@RequestBody KvStoreParam kvStoreParam) {
+        return kvStoreService.update(kvStoreParam);
     }
 
     @ApiOperation("字典删除")

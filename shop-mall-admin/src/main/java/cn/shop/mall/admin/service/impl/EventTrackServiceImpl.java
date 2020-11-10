@@ -31,12 +31,13 @@ public class EventTrackServiceImpl implements EventTrackService {
     }
 
     @Override
-    public ResponseVO list() {
-        Long count = eventTrackDao.count();
+    public ResponseVO list(Integer limit, Integer page, String eventDo, String eventWho) {
+        Long count = eventTrackDao.count(eventDo, eventWho);
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        List<EventTrackEntity> list = eventTrackDao.list();
-        return ResponseVO.SUCCESS(new PageDto<>(list, count));
+        Integer offset = (page - 1) * limit;
+        List<EventTrackEntity> list = eventTrackDao.list(limit, offset, eventDo, eventWho);
+        return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
     }
 }

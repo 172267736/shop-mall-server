@@ -33,6 +33,6 @@
             #end
             #end
         </set>
-        where id = #{id}
+        where id = #{uniqueId}
     </update>
 </mapper>

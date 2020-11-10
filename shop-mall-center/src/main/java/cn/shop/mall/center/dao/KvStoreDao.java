@@ -2,6 +2,7 @@ package cn.shop.mall.center.dao;
 
 import cn.shop.mall.center.entity.KvStoreEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,6 +24,6 @@ public interface KvStoreDao {
 
     Long count();
 
-    List<KvStoreEntity> list();
+    List<KvStoreEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
 }

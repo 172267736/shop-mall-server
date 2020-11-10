@@ -21,8 +21,9 @@ public class OrderController {
 
     @ApiOperation("订单列表")
     @GetMapping("/list")
-    public ResponseVO list() {
-        return orderService.list();
+    public ResponseVO list(@ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
+                           @ApiParam(value = "每页条数", required = true) @RequestParam Integer page) {
+        return orderService.list(limit, page);
     }
 
     @ApiOperation("订单详情")

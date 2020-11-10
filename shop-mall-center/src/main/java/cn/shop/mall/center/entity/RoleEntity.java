@@ -1,11 +1,13 @@
 package cn.shop.mall.center.entity;
 
+import cn.shop.mall.center.entity.extend.RoleExtend;
+
 import java.util.Date;
 
 /**
  * 角色表
  */
-public class RoleEntity {
+public class RoleEntity extends RoleExtend {
 
     /**
      * 主键自增
@@ -16,6 +18,11 @@ public class RoleEntity {
      * 角色名称
      */
     private String roleName;
+
+    /**
+     * 角色备注
+     */
+    private String roleRemark;
 
     /**
      * 是否删除（0：否；1：删除）
@@ -32,43 +39,51 @@ public class RoleEntity {
      */
     private Date updateDate;
 
-    public void setUniqueId(Long uniqueId){
+    public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
     }
 
-    public Long getUniqueId(){
+    public Long getUniqueId() {
         return uniqueId;
     }
 
-    public void setRoleName(String roleName){
+    public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
 
-    public String getRoleName(){
+    public String getRoleName() {
         return roleName;
     }
 
-    public void setDeleted(Integer deleted){
+    public String getRoleRemark() {
+        return roleRemark;
+    }
+
+    public void setRoleRemark(String roleRemark) {
+        this.roleRemark = roleRemark;
+    }
+
+    public void setDeleted(Integer deleted) {
         this.deleted = deleted;
     }
 
-    public Integer getDeleted(){
+    public Integer getDeleted() {
         return deleted;
     }
 
-    public void setCreateDate(Date createDate){
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public Date getCreateDate(){
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setUpdateDate(Date updateDate){
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 
-    public Date getUpdateDate(){
+    public Date getUpdateDate() {
         return updateDate;
     }
 
