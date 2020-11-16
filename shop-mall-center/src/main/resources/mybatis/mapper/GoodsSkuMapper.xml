@@ -39,9 +39,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="goodsUniqueId != null">
                 #{goodsUniqueId},
             </if>
@@ -75,9 +72,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.GoodsSkuEntity">
         update goods_sku
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="goodsUniqueId != null">
                 goods_unique_id = #{goodsUniqueId},
             </if>
@@ -108,4 +102,41 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <update id="batchUpdate" parameterType="cn.shop.mall.center.entity.GoodsSkuEntity">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update goods_sku
+            <set>
+                <if test="item.goodsUniqueId != null">
+                    goods_unique_id = #{item.goodsUniqueId},
+                </if>
+                <if test="item.goodsStock != null">
+                    goods_stock = #{item.goodsStock},
+                </if>
+                <if test="item.smallImg != null">
+                    small_img = #{item.smallImg},
+                </if>
+                <if test="item.bindProperty != null">
+                    bind_property = #{item.bindProperty},
+                </if>
+                <if test="item.price != null">
+                    price = #{item.price},
+                </if>
+                <if test="item.deleted != null">
+                    deleted = #{item.deleted},
+                </if>
+                <if test="item.createDate != null">
+                    create_date = #{item.createDate},
+                </if>
+                <if test="item.updateDate != null">
+                    update_date = #{item.updateDate},
+                </if>
+            </set>
+            where unique_id = #{item.uniqueId}
+        </foreach>
+    </update>
+
+    <select id="listByGoodsId" resultType="cn.shop.mall.center.entity.GoodsSkuEntity">
+        select * from goods_sku where goods_unique_id = #{goodsId} and deleted = 0
+    </select>
 </mapper>

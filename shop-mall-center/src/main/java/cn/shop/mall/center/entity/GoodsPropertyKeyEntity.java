@@ -1,11 +1,13 @@
 package cn.shop.mall.center.entity;
 
+import cn.shop.mall.center.entity.extend.GoodsPropertyKeyExtend;
+
 import java.util.Date;
 
 /**
  * 商品属性键表
  */
-public class GoodsPropertyKeyEntity {
+public class GoodsPropertyKeyEntity extends GoodsPropertyKeyExtend {
 
     /**
      * 主键自增

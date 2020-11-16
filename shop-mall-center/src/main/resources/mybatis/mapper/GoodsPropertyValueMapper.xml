@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into goods_property_value
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="goodsPropertyKeyUniqueId != null">
                 goods_property_key_unique_id,
             </if>
@@ -30,9 +27,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="goodsPropertyKeyUniqueId != null">
                 #{goodsPropertyKeyUniqueId},
             </if>
@@ -57,9 +51,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.GoodsPropertyValueEntity">
         update goods_property_value
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="goodsPropertyKeyUniqueId != null">
                 goods_property_key_unique_id = #{goodsPropertyKeyUniqueId},
             </if>
@@ -81,4 +72,18 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <select id="listByKeyIds" resultType="cn.shop.mall.center.entity.GoodsPropertyValueEntity">
+        select
+            a.*,b.property_name,b.property_key
+        from
+            goods_property_value as a
+        left join
+            goods_property_key as b on a.goods_property_key_unique_id = b.unique_id
+        where
+            a.goods_property_key_unique_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

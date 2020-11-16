@@ -18,9 +18,11 @@ public interface RoleDao {
 
     List<RoleEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset, @Param("roleName") String roleName);
 
+    List<RoleEntity> listAll();
+
     Long count(@Param("roleName") String roleName);
 
-    Integer deleteById(Long uniqueId);
+    Integer deleteByIds(List<Long> ids);
 
     RoleEntity getById(Long uniqueId);
 

@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into goods_property_key
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="goodsUniqueId != null">
                 goods_unique_id,
             </if>
@@ -33,9 +30,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="goodsUniqueId != null">
                 #{goodsUniqueId},
             </if>
@@ -63,9 +57,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.GoodsPropertyKeyEntity">
         update goods_property_key
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="goodsUniqueId != null">
                 goods_unique_id = #{goodsUniqueId},
             </if>
@@ -90,4 +81,8 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <select id="listByGoodsId" resultType="cn.shop.mall.center.entity.GoodsPropertyKeyEntity">
+        select * from goods_property_key where goods_unique_id = #{goodsId} and deleted = 0 order by property_key_sort desc
+    </select>
 </mapper>

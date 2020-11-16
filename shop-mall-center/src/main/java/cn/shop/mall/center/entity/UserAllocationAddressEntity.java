@@ -47,6 +47,8 @@ public class UserAllocationAddressEntity {
      */
     private String tag;
 
+    private Integer defaultState;
+
     /**
      * 是否删除（0：否；1：删除）
      */
@@ -150,4 +152,11 @@ public class UserAllocationAddressEntity {
         return updateDate;
     }
 
+    public Integer getDefaultState() {
+        return defaultState;
+    }
+
+    public void setDefaultState(Integer defaultState) {
+        this.defaultState = defaultState;
+    }
 }

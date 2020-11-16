@@ -8,9 +8,6 @@
             useGeneratedKeys="true">
         insert into user_allocation_address
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="userUniqueId != null">
                 user_unique_id,
             </if>
@@ -43,9 +40,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="userUniqueId != null">
                 #{userUniqueId},
             </if>
@@ -82,9 +76,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.UserAllocationAddressEntity">
         update user_allocation_address
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="userUniqueId != null">
                 user_unique_id = #{userUniqueId},
             </if>

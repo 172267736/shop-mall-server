@@ -20,7 +20,7 @@ public interface UserAdminDao {
 
     List<UserAdminEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset, @Param("userName") String userName);
 
-    Integer deleteById(Long id);
+    Integer deleteByIds(List<Long> ids);
 
     UserAdminEntity getById(Long id);
 

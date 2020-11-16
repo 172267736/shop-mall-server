@@ -66,8 +66,8 @@ public class MenuController {
 
     @ApiOperation("删除菜单")
     @PostMapping("/delete")
-    public ResponseVO delete(@ApiParam(value = "菜单编号", required = true) @RequestParam Long id) {
-        return menuService.delete(id);
+    public ResponseVO delete(@RequestBody MenuParam menuParam) {
+        return menuService.delete(menuParam.getIds());
     }
 
 }

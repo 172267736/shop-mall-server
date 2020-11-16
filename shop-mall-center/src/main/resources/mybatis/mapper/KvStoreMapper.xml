@@ -7,11 +7,8 @@
             useGeneratedKeys="true">
         insert into kv_store
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
-            <if test="key != null">
-                key,
+            <if test="keyFlag != null">
+                key_flag,
             </if>
             <if test="firstName != null">
                 first_name,
@@ -19,8 +16,8 @@
             <if test="lastName != null">
                 last_name,
             </if>
-            <if test="value != null">
-                value,
+            <if test="storeValue != null">
+                store_value,
             </if>
             <if test="keyDescription != null">
                 key_description,
@@ -36,11 +33,8 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
-            <if test="key != null">
-                #{key},
+            <if test="keyFlag != null">
+                #{keyFlag},
             </if>
             <if test="firstName != null">
                 #{firstName},
@@ -48,8 +42,8 @@
             <if test="lastName != null">
                 #{lastName},
             </if>
-            <if test="value != null">
-                #{value},
+            <if test="storeValue != null">
+                #{storeValue},
             </if>
             <if test="keyDescription != null">
                 #{keyDescription},
@@ -69,11 +63,8 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.KvStoreEntity">
         update kv_store
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
-            <if test="key != null">
-                key = #{key},
+            <if test="keyFlag != null">
+                key_flag = #{keyFlag},
             </if>
             <if test="firstName != null">
                 first_name = #{firstName},
@@ -81,8 +72,8 @@
             <if test="lastName != null">
                 last_name = #{lastName},
             </if>
-            <if test="value != null">
-                value = #{value},
+            <if test="storeValue != null">
+                store_value = #{storeValue},
             </if>
             <if test="keyDescription != null">
                 key_description = #{keyDescription},
@@ -99,4 +90,46 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <select id="getByKeyFlag" resultType="cn.shop.mall.center.entity.KvStoreEntity">
+        select * from kv_store where deleted = 0 and key_flag = #{keyFlag}
+    </select>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.KvStoreEntity">
+        select * from kv_store where deleted = 0 and unique_id = #{uniqueId}
+    </select>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.KvStoreEntity">
+        select * from kv_store
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="keyFlag != null and keyFlag != ''">
+                and key_flag like concat('%', #{keyFlag}, '%')
+            </if>
+        </where>
+        order by create_date desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from kv_store
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="keyFlag != null and keyFlag != ''">
+                and key_flag like concat('%', #{keyFlag}, '%')
+            </if>
+        </where>
+    </select>
+
+    <update id="deleteByIds">
+        update kv_store set deleted = 1 where unique_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>

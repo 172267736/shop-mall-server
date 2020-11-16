@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="roleName != null">
                 role_name,
             </if>
@@ -27,9 +24,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="roleName != null">
                 #{roleName},
             </if>
@@ -70,6 +64,10 @@
         where unique_id = #{uniqueId}
     </update>
 
+    <select id="listAll" resultType="cn.shop.mall.center.entity.RoleEntity">
+        select * from role where deleted = 0
+    </select>
+
     <select id="list" resultType="cn.shop.mall.center.entity.RoleEntity">
         select * from role
         <where>
@@ -80,6 +78,7 @@
                 and role_name like concat('%', #{roleName}, '%')
             </if>
         </where>
+        order by create_date desc
         limit #{offset},#{limit}
     </select>
 
@@ -100,7 +99,10 @@
         where deleted = 0 and unique_id = #{uniqueId}
     </select>
 
-    <update id="deleteById">
-        update role set deleted = 1 where unique_id = #{uniqueId}
+    <update id="deleteByIds">
+        update role set deleted = 1 where unique_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
 </mapper>

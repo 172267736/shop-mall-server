@@ -17,7 +17,7 @@ public interface MenuRoleDao {
 
     Integer batchSave(List<MenuRoleEntity> menuRoleList);
 
-    Integer deleteByRoleId(Long roleId);
+    Integer deleteByRoleIds(List<Long> roleIds);
 
     List<MenuRoleEntity> listByRoleId(Long roleId);
 

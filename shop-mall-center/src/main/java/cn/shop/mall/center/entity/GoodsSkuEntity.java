@@ -27,12 +27,12 @@ public class GoodsSkuEntity {
      */
     private String smallImg;
 
+    private String bindProperty;
+
     /**
      * 价格
      */
     private Double price;
-
-    private String skuFlag;
 
     /**
      * 是否删除（0：否；1：删除）
@@ -49,12 +49,12 @@ public class GoodsSkuEntity {
      */
     private Date updateDate;
 
-    public String getSkuFlag() {
-        return skuFlag;
+    public String getBindProperty() {
+        return bindProperty;
     }
 
-    public void setSkuFlag(String skuFlag) {
-        this.skuFlag = skuFlag;
+    public void setBindProperty(String bindProperty) {
+        this.bindProperty = bindProperty;
     }
 
     public void setUniqueId(Long uniqueId){

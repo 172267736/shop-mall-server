@@ -15,7 +15,7 @@ public class KvStoreEntity {
     /**
      * 唯一键
      */
-    private String key;
+    private String keyFlag;
 
     /**
      * 组名一
@@ -30,7 +30,7 @@ public class KvStoreEntity {
     /**
      * 值
      */
-    private String value;
+    private String storeValue;
 
     /**
      * key说明
@@ -60,12 +60,12 @@ public class KvStoreEntity {
         return uniqueId;
     }
 
-    public void setKey(String key){
-        this.key = key;
+    public String getKeyFlag() {
+        return keyFlag;
     }
 
-    public String getKey(){
-        return key;
+    public void setKeyFlag(String keyFlag) {
+        this.keyFlag = keyFlag;
     }
 
     public void setFirstName(String firstName){
@@ -84,12 +84,12 @@ public class KvStoreEntity {
         return lastName;
     }
 
-    public void setValue(String value){
-        this.value = value;
+    public String getStoreValue() {
+        return storeValue;
     }
 
-    public String getValue(){
-        return value;
+    public void setStoreValue(String storeValue) {
+        this.storeValue = storeValue;
     }
 
     public void setKeyDescription(String keyDescription){

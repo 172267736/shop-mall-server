@@ -3,6 +3,8 @@ package cn.shop.mall.admin.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+
 @ApiModel("添加或者编辑菜单")
 public class MenuParam {
 
@@ -26,6 +28,9 @@ public class MenuParam {
 
     @ApiModelProperty(value = "图标")
     private String icon;
+
+    @ApiModelProperty(value = "编号集合")
+    private List<Long> ids;
 
     public Long getUniqueId() {
         return uniqueId;
@@ -81,5 +86,13 @@ public class MenuParam {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 }

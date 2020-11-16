@@ -1,9 +1,11 @@
 package cn.shop.mall.admin.service.impl;
 
+import cn.shop.mall.admin.event.EventTrack;
 import cn.shop.mall.admin.model.MenuParam;
 import cn.shop.mall.admin.service.MenuService;
 import cn.shop.mall.center.dao.MenuDao;
 import cn.shop.mall.center.entity.MenuEntity;
+import cn.shop.mall.common.enums.EventTrackEnum;
 import cn.shop.mall.common.model.PageDto;
 import cn.shop.mall.common.model.UserHeader;
 import cn.shop.mall.common.vo.ResponseVO;
@@ -84,14 +86,16 @@ public class MenuServiceImpl implements MenuService {
         return ResponseVO.SUCCESS(menuDao.getById(id));
     }
 
+    @EventTrack(value = EventTrackEnum.删除菜单)
     @Override
-    public ResponseVO delete(Long id) {
-        return ResponseVO.SUCCESS(menuDao.deleteById(id));
+    public ResponseVO delete(List<Long> ids) {
+        return ResponseVO.SUCCESS(menuDao.deleteByIds(ids));
     }
 
     /**
      * 添加菜单
      */
+    @EventTrack(value = EventTrackEnum.新增菜单)
     @Override
     public ResponseVO save(MenuParam menuParam) {
         MenuEntity menuEntity = new MenuEntity();
@@ -104,6 +108,7 @@ public class MenuServiceImpl implements MenuService {
         return ResponseVO.SUCCESS();
     }
 
+    @EventTrack(value = EventTrackEnum.编辑菜单)
     @Override
     public ResponseVO update(MenuParam menuParam) {
         MenuEntity menuEntity = menuDao.getById(menuParam.getUniqueId());

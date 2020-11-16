@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into user_admin
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="userName != null">
                 user_name,
             </if>
@@ -39,9 +36,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="userName != null">
                 #{userName},
             </if>
@@ -75,9 +69,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.UserAdminEntity">
         update user_admin
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="userName != null">
                 user_name = #{userName},
             </if>
@@ -110,25 +101,43 @@
     </update>
 
     <select id="getByUserName" resultType="cn.shop.mall.center.entity.UserAdminEntity">
-        select * from user_admin where user_name = #{userName}
+        select * from user_admin where user_name = #{userName} and deleted = 0
     </select>
 
     <select id="list" resultType="cn.shop.mall.center.entity.UserAdminEntity">
         select * from user_admin
         <where>
+            <if test="true">
+                and deleted = 0
+            </if>
             <if test="userName != null and userName != ''">
                 and user_name concat('%', #{userName}, '%')
             </if>
         </where>
+        order by create_date desc
         limit #{offset},#{limit}
+    </select>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.UserAdminEntity">
+        select * from user_admin where deleted = 0 and unique_id = #{uniqueId}
     </select>
 
     <select id="count" resultType="java.lang.Long">
         select count(1) from user_admin
         <where>
+            <if test="true">
+                and deleted = 0
+            </if>
             <if test="userName != null and userName != ''">
                 and user_name like concat('%', #{userName}, '%')
             </if>
         </where>
     </select>
+
+    <update id="deleteByIds">
+        update user_admin set deleted = 1 where unique_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

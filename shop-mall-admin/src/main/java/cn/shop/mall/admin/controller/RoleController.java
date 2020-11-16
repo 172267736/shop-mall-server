@@ -30,6 +30,12 @@ public class RoleController {
         return roleService.list(limit, page, roleName);
     }
 
+    @ApiOperation("全部角色")
+    @GetMapping("/listAll")
+    public ResponseVO listAll() {
+        return roleService.listAll();
+    }
+
     @ApiOperation("角色详情")
     @GetMapping("/detail")
     public ResponseVO detail(@ApiParam(value = "角色编号", required = true) @RequestParam Long id) {
@@ -38,8 +44,8 @@ public class RoleController {
 
     @ApiOperation("删除角色")
     @PostMapping("/delete")
-    public ResponseVO delete(@ApiParam(value = "角色编号", required = true) @RequestParam Long id) {
-        return roleService.delete(id);
+    public ResponseVO delete(@RequestBody RoleParam roleParam) {
+        return roleService.delete(roleParam.getIds());
     }
 
     @ApiOperation("新增角色")

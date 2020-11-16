@@ -16,8 +16,11 @@ public interface GoodsClassifyDao {
 
     Integer update(GoodsClassifyEntity goodsClassifyEntity);
 
-    Long count();
+    GoodsClassifyEntity getById(Long id);
 
-    List<GoodsClassifyEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset);
+    Long count(@Param("classifyName") String classifyName);
 
+    List<GoodsClassifyEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset, @Param("classifyName") String classifyName);
+
+    List<GoodsClassifyEntity> listAll();
 }

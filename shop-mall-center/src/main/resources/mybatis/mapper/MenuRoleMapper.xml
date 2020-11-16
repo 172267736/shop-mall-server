@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into menu_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="menuUniqueId != null">
                 menu_unique_id,
             </if>
@@ -27,9 +24,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="menuUniqueId != null">
                 #{menuUniqueId},
             </if>
@@ -53,9 +47,6 @@
         <foreach collection="list" item="item" index="index" separator=";">
         insert into menu_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="item.uniqueId != null">
-                unique_id,
-            </if>
             <if test="item.menuUniqueId != null">
                 menu_unique_id,
             </if>
@@ -73,9 +64,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="item.uniqueId != null">
-                #{item.uniqueId},
-            </if>
             <if test="item.menuUniqueId != null">
                 #{item.menuUniqueId},
             </if>
@@ -117,16 +105,19 @@
                 update_date = #{updateDate},
             </if>
         </set>
-        where id = #{uniqueId}
+        where unique_id = #{uniqueId}
     </update>
 
-    <update id="deleteByRoleId">
+    <update id="deleteByRoleIds">
         update menu_role
         set deleted = 1
-        where role_unique_id = #{roleId}
+        where role_unique_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
 
     <select id="listByRoleId" resultType="cn.shop.mall.center.entity.MenuRoleEntity">
-        select * from menu_role where role_unique_id = #{roleId}
+        select * from menu_role where role_unique_id = #{roleId} and deleted = 0
     </select>
 </mapper>

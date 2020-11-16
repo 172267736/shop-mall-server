@@ -18,8 +18,11 @@ public interface GoodsDao {
 
     GoodsEntity getById(Long id);
 
-    List<GoodsEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset);
+    List<GoodsEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset,
+                           @Param("status") Integer status, @Param("goodsTag") String goodsTag,
+                           @Param("goodsName") String goodsName, @Param("belongClassifyId") Long belongClassifyId);
 
-    Long count();
+    Long count(@Param("status") Integer status, @Param("goodsTag") String goodsTag,
+               @Param("goodsName") String goodsName, @Param("belongClassifyId") Long belongClassifyId);
 
 }

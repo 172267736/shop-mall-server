@@ -28,14 +28,14 @@ public class OrderAccountEntity {
     private Long goodsSkuUniqueId;
 
     /**
-     * 价格
+     * 单价
      */
-    private Double price;
+    private Double singlePrice;
 
     /**
-     * 商品信息
+     * 购买数量
      */
-    private String goodsInformation;
+    private Integer buyNumber;
 
     /**
      * 清单备注
@@ -89,20 +89,20 @@ public class OrderAccountEntity {
         return goodsSkuUniqueId;
     }
 
-    public void setPrice(Double price){
-        this.price = price;
+    public Double getSinglePrice() {
+        return singlePrice;
     }
 
-    public Double getPrice(){
-        return price;
+    public void setSinglePrice(Double singlePrice) {
+        this.singlePrice = singlePrice;
     }
 
-    public void setGoodsInformation(String goodsInformation){
-        this.goodsInformation = goodsInformation;
+    public Integer getBuyNumber() {
+        return buyNumber;
     }
 
-    public String getGoodsInformation(){
-        return goodsInformation;
+    public void setBuyNumber(Integer buyNumber) {
+        this.buyNumber = buyNumber;
     }
 
     public void setAccountRemark(String accountRemark){

@@ -1,11 +1,13 @@
 package cn.shop.mall.center.entity;
 
+import cn.shop.mall.center.entity.extend.UserAdminExtend;
+
 import java.util.Date;
 
 /**
  * 管理用户表
  */
-public class UserAdminEntity {
+public class UserAdminEntity extends UserAdminExtend {
 
     /**
      * 主键自增

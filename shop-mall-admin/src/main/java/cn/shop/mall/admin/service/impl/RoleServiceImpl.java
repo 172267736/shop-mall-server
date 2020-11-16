@@ -1,11 +1,13 @@
 package cn.shop.mall.admin.service.impl;
 
+import cn.shop.mall.admin.event.EventTrack;
 import cn.shop.mall.admin.model.RoleParam;
 import cn.shop.mall.admin.service.RoleService;
 import cn.shop.mall.center.dao.MenuRoleDao;
 import cn.shop.mall.center.dao.RoleDao;
 import cn.shop.mall.center.entity.MenuRoleEntity;
 import cn.shop.mall.center.entity.RoleEntity;
+import cn.shop.mall.common.enums.EventTrackEnum;
 import cn.shop.mall.common.model.PageDto;
 import cn.shop.mall.common.vo.ResponseVO;
 import com.google.common.collect.Lists;
@@ -41,12 +43,24 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
+     * 角色列表
+     */
+    @Override
+    public ResponseVO listAll() {
+        return ResponseVO.SUCCESS(roleDao.listAll());
+    }
+
+    /**
      * 添加角色
      */
+    @EventTrack(value = EventTrackEnum.新增角色)
     @Transactional
     @Override
     public ResponseVO save(RoleParam roleParam) {
         RoleEntity roleEntity = new RoleEntity();
+        if (StringUtils.isEmpty(roleParam.getRoleName())) {
+            return ResponseVO.FAIL("角色名称不能为空");
+        }
         roleEntity.setRoleName(roleParam.getRoleName());
         roleEntity.setRoleRemark(roleParam.getRoleRemark());
         roleDao.save(roleEntity);
@@ -57,6 +71,7 @@ public class RoleServiceImpl implements RoleService {
         return ResponseVO.SUCCESS();
     }
 
+    @EventTrack(value = EventTrackEnum.编辑角色)
     @Transactional
     @Override
     public ResponseVO update(RoleParam roleParam) {
@@ -68,7 +83,7 @@ public class RoleServiceImpl implements RoleService {
             }
         }
         if (!StringUtils.isEmpty(roleParam.getMenuIdList())) {
-            menuRoleDao.deleteByRoleId(roleParam.getUniqueId());
+            menuRoleDao.deleteByRoleIds(Lists.newArrayList(roleParam.getUniqueId()));
             List<MenuRoleEntity> menuRoleList = buildMenuRoleList(roleParam.getUniqueId(), roleParam.getMenuIdList());
             menuRoleDao.batchSave(menuRoleList);
         }
@@ -89,11 +104,12 @@ public class RoleServiceImpl implements RoleService {
     /**
      * 删除角色
      */
+    @EventTrack(value = EventTrackEnum.删除角色)
     @Transactional
     @Override
-    public ResponseVO delete(Long id) {
-        roleDao.deleteById(id);
-        menuRoleDao.deleteByRoleId(id);
+    public ResponseVO delete(List<Long> ids) {
+        roleDao.deleteByIds(ids);
+        menuRoleDao.deleteByRoleIds(ids);
         return ResponseVO.SUCCESS();
     }
 

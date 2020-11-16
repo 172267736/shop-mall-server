@@ -17,22 +17,22 @@ public class OrderEntity extends OrderExtend {
     /**
      * 订单号
      */
-    private Long orderNumber;
+    private String orderNumber;
 
     /**
      * 三方订单号
      */
-    private Integer thirdpartOrderNumber;
+    private String thirdpartOrderNumber;
 
     /**
      * 订单状态（0：待支付；1：支付中；2：支付成功；3：支付失败）
      */
-    private String status;
+    private Integer status;
 
     /**
      * 是否超时（0：否；1：是）
      */
-    private String expireState;
+    private Integer expireState;
 
     /**
      * 支付用户
@@ -89,132 +89,131 @@ public class OrderEntity extends OrderExtend {
      */
     private Date updateDate;
 
-    public void setUniqueId(Long uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
     public Long getUniqueId() {
         return uniqueId;
     }
 
-    public void setOrderNumber(Long orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setUniqueId(Long uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
-    public Long getOrderNumber() {
+    public String getOrderNumber() {
         return orderNumber;
     }
 
-    public void setThirdpartOrderNumber(Integer thirdpartOrderNumber) {
-        this.thirdpartOrderNumber = thirdpartOrderNumber;
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
-    public Integer getThirdpartOrderNumber() {
+    public String getThirdpartOrderNumber() {
         return thirdpartOrderNumber;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setThirdpartOrderNumber(String thirdpartOrderNumber) {
+        this.thirdpartOrderNumber = thirdpartOrderNumber;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setExpireState(String expireState) {
-        this.expireState = expireState;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getExpireState() {
+    public Integer getExpireState() {
         return expireState;
     }
 
-    public void setPayUserUniqueId(Long payUserUniqueId) {
-        this.payUserUniqueId = payUserUniqueId;
+    public void setExpireState(Integer expireState) {
+        this.expireState = expireState;
     }
 
     public Long getPayUserUniqueId() {
         return payUserUniqueId;
     }
 
-    public void setShouldPayMoney(Double shouldPayMoney) {
-        this.shouldPayMoney = shouldPayMoney;
+    public void setPayUserUniqueId(Long payUserUniqueId) {
+        this.payUserUniqueId = payUserUniqueId;
     }
 
     public Double getShouldPayMoney() {
         return shouldPayMoney;
     }
 
-    public void setActualPayMoney(Double actualPayMoney) {
-        this.actualPayMoney = actualPayMoney;
+    public void setShouldPayMoney(Double shouldPayMoney) {
+        this.shouldPayMoney = shouldPayMoney;
     }
 
     public Double getActualPayMoney() {
         return actualPayMoney;
     }
 
-    public void setPayType(Integer payType) {
-        this.payType = payType;
+    public void setActualPayMoney(Double actualPayMoney) {
+        this.actualPayMoney = actualPayMoney;
     }
 
     public Integer getPayType() {
         return payType;
     }
 
-    public void setPayResultDescription(String payResultDescription) {
-        this.payResultDescription = payResultDescription;
+    public void setPayType(Integer payType) {
+        this.payType = payType;
     }
 
     public String getPayResultDescription() {
         return payResultDescription;
     }
 
-    public void setPayOverTime(Date payOverTime) {
-        this.payOverTime = payOverTime;
+    public void setPayResultDescription(String payResultDescription) {
+        this.payResultDescription = payResultDescription;
     }
 
     public Date getPayOverTime() {
         return payOverTime;
     }
 
-    public void setAllocationAddressUniqueId(Long allocationAddressUniqueId) {
-        this.allocationAddressUniqueId = allocationAddressUniqueId;
+    public void setPayOverTime(Date payOverTime) {
+        this.payOverTime = payOverTime;
     }
 
     public Long getAllocationAddressUniqueId() {
         return allocationAddressUniqueId;
     }
 
-    public void setOrderRemark(String orderRemark) {
-        this.orderRemark = orderRemark;
+    public void setAllocationAddressUniqueId(Long allocationAddressUniqueId) {
+        this.allocationAddressUniqueId = allocationAddressUniqueId;
     }
 
     public String getOrderRemark() {
         return orderRemark;
     }
 
-    public void setDeleted(Integer deleted) {
-        this.deleted = deleted;
+    public void setOrderRemark(String orderRemark) {
+        this.orderRemark = orderRemark;
     }
 
     public Integer getDeleted() {
         return deleted;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
     }
 
     public Date getCreateDate() {
         return createDate;
     }
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public Date getUpdateDate() {
         return updateDate;
     }
 
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 }

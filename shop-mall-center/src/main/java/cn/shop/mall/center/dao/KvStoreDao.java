@@ -16,14 +16,14 @@ public interface KvStoreDao {
 
     Integer update(KvStoreEntity kvStoreEntity);
 
-    KvStoreEntity getByKey(String key);
+    KvStoreEntity getByKeyFlag(String keyFlag);
 
     KvStoreEntity getById(Long id);
 
-    Integer deleteById(Long id);
+    Integer deleteByIds(List<Long> ids);
 
-    Long count();
+    Long count(@Param("keyFlag") String keyFlag);
 
-    List<KvStoreEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset);
+    List<KvStoreEntity> list(@Param("keyFlag") String keyFlag, @Param("limit") Integer limit, @Param("offset") Integer offset);
 
 }

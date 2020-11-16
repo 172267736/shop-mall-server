@@ -7,14 +7,17 @@
             useGeneratedKeys="true">
         insert into goods
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="goodsName != null">
                 goods_name,
             </if>
             <if test="bigImgs != null">
                 big_imgs,
+            </if>
+            <if test="goodsBrand != null">
+                goods_brand,
+            </if>
+            <if test="goodsBrandLogo != null">
+                goods_brand_logo,
             </if>
             <if test="goodsContent != null">
                 goods_content,
@@ -40,6 +43,9 @@
             <if test="currentPrice != null">
                 current_price,
             </if>
+            <if test="stockUnit != null">
+                stock_unit,
+            </if>
             <if test="status != null">
                 status,
             </if>
@@ -54,14 +60,17 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="goodsName != null">
                 #{goodsName},
             </if>
             <if test="bigImgs != null">
                 #{bigImgs},
+            </if>
+            <if test="goodsBrand != null">
+                #{goodsBrand},
+            </if>
+            <if test="goodsBrandLogo != null">
+                #{goodsBrandLogo},
             </if>
             <if test="goodsContent != null">
                 #{goodsContent},
@@ -87,6 +96,9 @@
             <if test="currentPrice != null">
                 #{currentPrice},
             </if>
+            <if test="stockUnit != null">
+                #{stockUnit},
+            </if>
             <if test="status != null">
                 #{status},
             </if>
@@ -105,14 +117,17 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.GoodsEntity">
         update goods
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="goodsName != null">
                 goods_name = #{goodsName},
             </if>
             <if test="bigImgs != null">
                 big_imgs = #{bigImgs},
+            </if>
+            <if test="goodsBrand != null">
+                goods_brand = #{goodsBrand},
+            </if>
+            <if test="goodsBrandLogo != null">
+                goods_brand_logo = #{goodsBrandLogo},
             </if>
             <if test="goodsContent != null">
                 goods_content = #{goodsContent},
@@ -138,6 +153,9 @@
             <if test="currentPrice != null">
                 current_price = #{currentPrice},
             </if>
+            <if test="stockUnit != null">
+                stock_unit = #{stockUnit},
+            </if>
             <if test="status != null">
                 status = #{status},
             </if>
@@ -153,4 +171,52 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.GoodsEntity">
+        select * from goods where deleted = 0 and unique_id = #{uniqueId}
+    </select>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.GoodsEntity">
+        select * from goods
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="goodsTag != null and goodsTag != ''">
+                and json_contains(goods_tags,JSON_ARRAY(#{goodsTag}))
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name like concat('%', #{goodsName}, '%')
+            </if>
+            <if test="belongClassifyId != null">
+                and json_contains(belong_classify_ids,JSON_ARRAY(#{belongClassifyId}))
+            </if>
+        </where>
+        order by create_date desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from goods
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="goodsTag != null and goodsTag != ''">
+                and json_contains(goods_tags,JSON_ARRAY(#{goodsTag}))
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name like concat('%', #{goodsName}, '%')
+            </if>
+            <if test="belongClassifyId != null">
+                and json_contains(belong_classify_ids,JSON_ARRAY(#{belongClassifyId}))
+            </if>
+        </where>
+    </select>
 </mapper>

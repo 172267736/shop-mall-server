@@ -1,11 +1,13 @@
 package cn.shop.mall.center.entity;
 
+import cn.shop.mall.center.entity.extend.GoodsClassifyExtend;
+
 import java.util.Date;
 
 /**
  * 商品分类表
  */
-public class GoodsClassifyEntity {
+public class GoodsClassifyEntity extends GoodsClassifyExtend {
 
     /**
      * 主键自增
@@ -47,67 +49,67 @@ public class GoodsClassifyEntity {
      */
     private Date updateDate;
 
-    public void setUniqueId(Long uniqueId){
+    public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
     }
 
-    public Long getUniqueId(){
+    public Long getUniqueId() {
         return uniqueId;
     }
 
-    public void setClassifyName(String classifyName){
+    public void setClassifyName(String classifyName) {
         this.classifyName = classifyName;
     }
 
-    public String getClassifyName(){
+    public String getClassifyName() {
         return classifyName;
     }
 
-    public void setClassifyParentId(Long classifyParentId){
+    public void setClassifyParentId(Long classifyParentId) {
         this.classifyParentId = classifyParentId;
     }
 
-    public Long getClassifyParentId(){
+    public Long getClassifyParentId() {
         return classifyParentId;
     }
 
-    public void setClassifyIcon(String classifyIcon){
+    public void setClassifyIcon(String classifyIcon) {
         this.classifyIcon = classifyIcon;
     }
 
-    public String getClassifyIcon(){
+    public String getClassifyIcon() {
         return classifyIcon;
     }
 
-    public void setClassifyDescription(String classifyDescription){
+    public void setClassifyDescription(String classifyDescription) {
         this.classifyDescription = classifyDescription;
     }
 
-    public String getClassifyDescription(){
+    public String getClassifyDescription() {
         return classifyDescription;
     }
 
-    public void setDeleted(Integer deleted){
+    public void setDeleted(Integer deleted) {
         this.deleted = deleted;
     }
 
-    public Integer getDeleted(){
+    public Integer getDeleted() {
         return deleted;
     }
 
-    public void setCreateDate(Date createDate){
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public Date getCreateDate(){
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setUpdateDate(Date updateDate){
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 
-    public Date getUpdateDate(){
+    public Date getUpdateDate() {
         return updateDate;
     }
 

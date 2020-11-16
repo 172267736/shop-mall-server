@@ -1,21 +1,26 @@
 package cn.shop.mall.admin.service;
 
+import cn.shop.mall.admin.model.UserParam;
 import cn.shop.mall.common.vo.ResponseVO;
+
+import java.util.List;
 
 public interface UserService {
 
-    ResponseVO login(String userName, String passWord);
+    ResponseVO login(UserParam userParam);
 
     ResponseVO loginOut(String token);
 
     ResponseVO list(Integer limit, Integer page, String userName);
 
-    ResponseVO delete(Long id);
+    ResponseVO delete(List<Long> ids);
 
-    ResponseVO save(String userName, String nickName, Long roleId);
+    ResponseVO detail(Long id);
 
-    ResponseVO updatePassword(String userName, String oldPassword, String newPassword);
+    ResponseVO save(UserParam userParam);
 
-    ResponseVO update(Long userId, String nickName, Long roleId);
+    ResponseVO updatePassword(UserParam userParam);
+
+    ResponseVO update(UserParam userParam);
 
 }

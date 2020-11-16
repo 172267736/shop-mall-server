@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into order_account
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="orderUniqueId != null">
                 order_unique_id,
             </if>
@@ -39,9 +36,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="orderUniqueId != null">
                 #{orderUniqueId},
             </if>
@@ -75,9 +69,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.OrderAccountEntity">
         update order_account
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="orderUniqueId != null">
                 order_unique_id = #{orderUniqueId},
             </if>

@@ -20,6 +20,9 @@ public class RoleParam {
     @ApiModelProperty(value = "菜单编号")
     private List<Long> menuIdList;
 
+    @ApiModelProperty(value = "编号集合")
+    private List<Long> ids;
+
     public Long getUniqueId() {
         return uniqueId;
     }
@@ -50,5 +53,13 @@ public class RoleParam {
 
     public void setMenuIdList(List<Long> menuIdList) {
         this.menuIdList = menuIdList;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 }

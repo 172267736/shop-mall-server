@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into role_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="userUniqueId != null">
                 user_unique_id,
             </if>
@@ -27,9 +24,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="userUniqueId != null">
                 #{userUniqueId},
             </if>
@@ -48,12 +42,50 @@
         </trim>
     </insert>
 
+    <insert id="batchSave" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.RoleUserEntity"
+            useGeneratedKeys="true">
+        <foreach collection="list" item="item" index="index" separator=";">
+        insert into role_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="item.userUniqueId != null">
+                user_unique_id,
+            </if>
+            <if test="item.roleUniqueId != null">
+                role_unique_id,
+            </if>
+            <if test="item.deleted != null">
+                deleted,
+            </if>
+            <if test="item.createDate != null">
+                create_date,
+            </if>
+            <if test="item.updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="item.userUniqueId != null">
+                #{item.userUniqueId},
+            </if>
+            <if test="item.roleUniqueId != null">
+                #{item.roleUniqueId},
+            </if>
+            <if test="item.deleted != null">
+                #{item.deleted},
+            </if>
+            <if test="item.createDate != null">
+                #{item.createDate},
+            </if>
+            <if test="item.updateDate != null">
+                #{item.updateDate},
+            </if>
+        </trim>
+        </foreach>
+    </insert>
+
     <update id="update" parameterType="cn.shop.mall.center.entity.RoleUserEntity">
         update role_user
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="userUniqueId != null">
                 user_unique_id = #{userUniqueId},
             </if>
@@ -72,4 +104,13 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <update id="deleteByUserId">
+        update role_user set deleted = 1
+        where user_unique_id = #{userUniqueId}
+    </update>
+
+    <select id="listByUserId" resultType="cn.shop.mall.center.entity.RoleUserEntity">
+        select * from role_user where user_unique_id = #{userId} and deleted = 0
+    </select>
 </mapper>

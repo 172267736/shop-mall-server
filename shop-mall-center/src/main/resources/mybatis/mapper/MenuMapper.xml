@@ -7,9 +7,6 @@
             useGeneratedKeys="true">
         insert into menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="parentUniqueId != null">
                 parent_unique_id,
             </if>
@@ -39,9 +36,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="parentUniqueId != null">
                 #{parentUniqueId},
             </if>
@@ -75,9 +69,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.MenuEntity">
         update menu
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="parentUniqueId != null">
                 parent_unique_id = #{parentUniqueId},
             </if>
@@ -145,6 +136,7 @@
                 and a.menu_type = #{menuType}
             </if>
         </where>
+        order by a.create_date desc
         limit #{offset},#{limit}
     </select>
 
@@ -154,8 +146,11 @@
         and a.deleted = 0
     </select>
 
-    <update id="deleteById">
-        update menu set deleted = 1 where unique_id = #{uniqueId}
+    <update id="deleteByIds">
+        update menu set deleted = 1 where unique_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
 
     <select id="count" resultType="java.lang.Long">

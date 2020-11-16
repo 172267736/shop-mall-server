@@ -3,13 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.shop.mall.center.dao.GoodsClassifyDao">
 
-    <insert id="save" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.GoodsClassifyEntity"
+    <insert id="save" keyColumn="unique_id" keyProperty="uniqueId"
+            parameterType="cn.shop.mall.center.entity.GoodsClassifyEntity"
             useGeneratedKeys="true">
         insert into goods_classify
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                unique_id,
-            </if>
             <if test="classifyName != null">
                 classify_name,
             </if>
@@ -33,9 +31,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uniqueId != null">
-                #{uniqueId},
-            </if>
             <if test="classifyName != null">
                 #{classifyName},
             </if>
@@ -63,9 +58,6 @@
     <update id="update" parameterType="cn.shop.mall.center.entity.GoodsClassifyEntity">
         update goods_classify
         <set>
-            <if test="uniqueId != null">
-                unique_id = #{uniqueId},
-            </if>
             <if test="classifyName != null">
                 classify_name = #{classifyName},
             </if>
@@ -90,4 +82,42 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.GoodsClassifyEntity">
+        select * from goods_classify where deleted = 0 and unique_id = #{uniqueId}
+    </select>
+
+    <select id="listAll" resultType="cn.shop.mall.center.entity.GoodsClassifyEntity">
+        select a.*,a.classify_name as name,(select b.classify_name from goods_classify as b where b.unique_id = a.classify_parent_id) as classifyParentName from goods_classify as a where a.deleted = 0
+    </select>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.GoodsClassifyEntity">
+        select
+            a.*,
+            (select b.classify_name from goods_classify as b where b.unique_id = a.classify_parent_id) as classifyParentName
+        from
+            goods_classify as a
+        <where>
+            <if test="true">
+                and a.deleted = 0
+            </if>
+            <if test="classifyName != null and classifyName != ''">
+                and a.classify_name like concat('%', #{classifyName}, '%')
+            </if>
+        </where>
+        order by a.create_date desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from goods_classify
+        <where>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="classifyName != null and classifyName != ''">
+                and classify_name like concat('%', #{classifyName}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

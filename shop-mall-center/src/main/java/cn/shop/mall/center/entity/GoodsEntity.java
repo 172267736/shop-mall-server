@@ -1,11 +1,13 @@
 package cn.shop.mall.center.entity;
 
+import cn.shop.mall.center.entity.extend.GoodsExtend;
+
 import java.util.Date;
 
 /**
  * 商品表
  */
-public class GoodsEntity {
+public class GoodsEntity extends GoodsExtend {
 
     /**
      * 主键自增
@@ -47,8 +49,6 @@ public class GoodsEntity {
      */
     private String goodsTags;
 
-    private String stockUnit;
-
     /**
      * 置顶序号
      */
@@ -64,10 +64,16 @@ public class GoodsEntity {
      */
     private Double currentPrice;
 
+    private String stockUnit;
+
     /**
      * 是否上架（0：否；1：是）
      */
     private Integer status;
+
+    private String goodsBrand;
+
+    private String goodsBrandLogo;
 
     /**
      * 是否删除（0：否；1：删除）
@@ -84,123 +90,139 @@ public class GoodsEntity {
      */
     private Date updateDate;
 
-    public void setUniqueId(Long uniqueId){
+    public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
     }
 
-    public Long getUniqueId(){
+    public Long getUniqueId() {
         return uniqueId;
     }
 
-    public void setGoodsName(String goodsName){
+    public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
     }
 
-    public String getGoodsName(){
+    public String getGoodsName() {
         return goodsName;
     }
 
-    public void setBigImgs(String bigImgs){
+    public void setBigImgs(String bigImgs) {
         this.bigImgs = bigImgs;
     }
 
-    public String getBigImgs(){
+    public String getBigImgs() {
         return bigImgs;
     }
 
-    public void setGoodsContent(String goodsContent){
+    public void setGoodsContent(String goodsContent) {
         this.goodsContent = goodsContent;
     }
 
-    public String getGoodsContent(){
+    public String getGoodsContent() {
         return goodsContent;
     }
 
-    public void setGoodsVideo(String goodsVideo){
+    public void setGoodsVideo(String goodsVideo) {
         this.goodsVideo = goodsVideo;
     }
 
-    public String getGoodsVideo(){
+    public String getGoodsVideo() {
         return goodsVideo;
     }
 
-    public void setGoodsDescription(String goodsDescription){
+    public void setGoodsDescription(String goodsDescription) {
         this.goodsDescription = goodsDescription;
     }
 
-    public String getGoodsDescription(){
+    public String getGoodsDescription() {
         return goodsDescription;
     }
 
-    public void setBelongClassifyIds(String belongClassifyIds){
+    public void setBelongClassifyIds(String belongClassifyIds) {
         this.belongClassifyIds = belongClassifyIds;
     }
 
-    public String getBelongClassifyIds(){
+    public String getBelongClassifyIds() {
         return belongClassifyIds;
     }
 
-    public void setGoodsTags(String goodsTags){
+    public void setGoodsTags(String goodsTags) {
         this.goodsTags = goodsTags;
     }
 
-    public String getGoodsTags(){
+    public String getGoodsTags() {
         return goodsTags;
     }
 
-    public void setTopSort(Integer topSort){
+    public void setTopSort(Integer topSort) {
         this.topSort = topSort;
     }
 
-    public Integer getTopSort(){
+    public Integer getTopSort() {
         return topSort;
     }
 
-    public void setOriginalPrice(Double originalPrice){
+    public void setOriginalPrice(Double originalPrice) {
         this.originalPrice = originalPrice;
     }
 
-    public Double getOriginalPrice(){
+    public Double getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setCurrentPrice(Double currentPrice){
+    public void setCurrentPrice(Double currentPrice) {
         this.currentPrice = currentPrice;
     }
 
-    public Double getCurrentPrice(){
+    public Double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setStatus(Integer status){
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Integer getStatus(){
+    public Integer getStatus() {
         return status;
     }
 
-    public void setDeleted(Integer deleted){
+    public String getGoodsBrand() {
+        return goodsBrand;
+    }
+
+    public void setGoodsBrand(String goodsBrand) {
+        this.goodsBrand = goodsBrand;
+    }
+
+    public String getGoodsBrandLogo() {
+        return goodsBrandLogo;
+    }
+
+    public void setGoodsBrandLogo(String goodsBrandLogo) {
+        this.goodsBrandLogo = goodsBrandLogo;
+    }
+
+    public void setDeleted(Integer deleted) {
         this.deleted = deleted;
     }
 
-    public Integer getDeleted(){
+    public Integer getDeleted() {
         return deleted;
     }
 
-    public void setCreateDate(Date createDate){
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public Date getCreateDate(){
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setUpdateDate(Date updateDate){
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 
-    public Date getUpdateDate(){
+    public Date getUpdateDate() {
         return updateDate;
     }
 

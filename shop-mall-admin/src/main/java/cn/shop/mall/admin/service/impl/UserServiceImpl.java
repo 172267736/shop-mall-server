@@ -1,6 +1,7 @@
 package cn.shop.mall.admin.service.impl;
 
 import cn.shop.mall.admin.event.EventTrack;
+import cn.shop.mall.admin.model.UserParam;
 import cn.shop.mall.admin.service.UserService;
 import cn.shop.mall.center.dao.MenuDao;
 import cn.shop.mall.center.dao.RoleUserDao;
@@ -24,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -53,17 +54,17 @@ public class UserServiceImpl implements UserService {
      */
     @EventTrack(value = EventTrackEnum.客户端登录)
     @Override
-    public ResponseVO login(String userName, String passWord) {
-        UserAdminEntity userEntity = userAdminDao.getByUserName(userName);
+    public ResponseVO login(UserParam userParam) {
+        UserAdminEntity userEntity = userAdminDao.getByUserName(userParam.getUserName());
         if (userEntity == null) {
             return ResponseVO.FAIL("账号不存在");
         }
-        String md5SaltPwd = MD5Utils.getSaltMD5(passWord, userEntity.getSalt());
+        String md5SaltPwd = MD5Utils.getSaltMD5(userParam.getPassword(), userEntity.getSalt());
         if (!md5SaltPwd.equals(userEntity.getUserPassword())) {
             return ResponseVO.FAIL(CodeMsgEnum.账号密码有误);
         }
         List<MenuEntity> menus;
-        if (userName.equals(UserHeader.Admin)) {
+        if (userParam.getUserName().equals(UserHeader.Admin)) {
             menus = menuDao.listMenuByType(MenuTypeEnum.接口.getCode());
         } else {
             menus = menuDao.listMenuByUserId(userEntity.getUniqueId());
@@ -80,6 +81,7 @@ public class UserServiceImpl implements UserService {
         return ResponseVO.SUCCESS(userBean);
     }
 
+    @EventTrack(value = EventTrackEnum.客户端登出)
     @Override
     public ResponseVO loginOut(String token) {
         redisTemplate.delete(token);
@@ -105,72 +107,88 @@ public class UserServiceImpl implements UserService {
      *
      * @param id 用户编号
      */
+    @EventTrack(value = EventTrackEnum.删除用户)
     @Override
-    public ResponseVO delete(Long id) {
-        userAdminDao.deleteById(id);
+    public ResponseVO delete(List<Long> ids) {
+        userAdminDao.deleteByIds(ids);
         return ResponseVO.SUCCESS();
+    }
+
+    @Override
+    public ResponseVO detail(Long id) {
+        UserAdminEntity userAdminEntity = userAdminDao.getById(id);
+        List<RoleUserEntity> roleUserList = roleUserDao.listByUserId(id);
+        userAdminEntity.setRoleIdList(Lists.transform(roleUserList, RoleUserEntity::getRoleUniqueId));
+        return ResponseVO.SUCCESS(userAdminEntity);
     }
 
     /**
      * 添加用户
      */
+    @EventTrack(value = EventTrackEnum.新增用户)
     @Transactional
     @Override
-    public ResponseVO save(String userName, String nickName, Long roleId) {
+    public ResponseVO save(UserParam userParam) {
         String salt = MD5Utils.getSalt();
         String md5SaltPwd = MD5Utils.getSaltMD5(defaultPassword, salt);
         UserAdminEntity user = new UserAdminEntity();
-        user.setNickName(nickName);
-        user.setUserName(userName);
+        user.setNickName(userParam.getNickName());
+        user.setUserName(userParam.getUserName());
+        user.setUserState(userParam.getUserState());
         user.setSalt(salt);
         user.setUserPassword(md5SaltPwd);
         userAdminDao.save(user);
-        RoleUserEntity roleUser = new RoleUserEntity();
-        roleUser.setRoleUniqueId(roleId);
-        roleUser.setUserUniqueId(user.getUniqueId());
-        roleUserDao.save(roleUser);
+        if (!CollectionUtils.isEmpty(userParam.getRoleIdList())) {
+            saveBatchRoleUser(userParam.getRoleIdList(), user.getUniqueId());
+        }
         return ResponseVO.SUCCESS();
+    }
+
+    private void saveBatchRoleUser(List<Long> roleIdList, Long userId) {
+        List<RoleUserEntity> roleUserList = Lists.newArrayList();
+        roleIdList.forEach(roleId -> {
+            RoleUserEntity roleUser = new RoleUserEntity();
+            roleUser.setRoleUniqueId(roleId);
+            roleUser.setUserUniqueId(userId);
+            roleUserList.add(roleUser);
+        });
+        roleUserDao.batchSave(roleUserList);
     }
 
     /**
      * 编辑用户
      */
+    @EventTrack(value = EventTrackEnum.编辑用户)
     @Transactional
     @Override
-    public ResponseVO update(Long userId, String nickName, Long roleId) {
-        if (!StringUtils.isEmpty(nickName)) {
-            UserAdminEntity user = userAdminDao.getById(userId);
-            if (user != null) {
-                user.setNickName(nickName);
-                userAdminDao.update(user);
-            }
+    public ResponseVO update(UserParam userParam) {
+        UserAdminEntity user = userAdminDao.getById(userParam.getUniqueId());
+        if (user != null) {
+            user.setUserState(userParam.getUserState());
+            user.setNickName(userParam.getNickName());
+            userAdminDao.update(user);
         }
-        if (StringUtils.isEmpty(roleId)) {
-            RoleUserEntity roleUser = roleUserDao.getByUserId(userId);
-            if (roleUser != null) {
-                roleUser.setRoleUniqueId(roleId);
-                roleUserDao.update(roleUser);
-            }
+        if (!CollectionUtils.isEmpty(userParam.getRoleIdList())) {
+            roleUserDao.deleteByUserId(userParam.getUniqueId());
+            saveBatchRoleUser(userParam.getRoleIdList(), userParam.getUniqueId());
         }
         return ResponseVO.SUCCESS();
     }
 
+    @EventTrack(value = EventTrackEnum.更新密码)
     @Override
-    public ResponseVO updatePassword(String userName, String oldPassword, String newPassword) {
-        if (!CurrentAuthorization.getUserName().equals(userName)) {
-            return ResponseVO.FAIL("非本人操作");
-        }
+    public ResponseVO updatePassword(UserParam userParam) {
+        String userName = CurrentAuthorization.getUserName();
         UserAdminEntity userEntity = userAdminDao.getByUserName(userName);
         if (userEntity == null) {
             return ResponseVO.FAIL("账号不存在");
         }
-
         String newSalt = MD5Utils.getSalt();
-        String md5SaltOldPwd = MD5Utils.getSaltMD5(oldPassword, userEntity.getSalt());
+        String md5SaltOldPwd = MD5Utils.getSaltMD5(userParam.getPassword(), userEntity.getSalt());
         if (!md5SaltOldPwd.equals(userEntity.getUserPassword())) {
             return ResponseVO.FAIL(CodeMsgEnum.账号密码有误);
         }
-        String md5SaltNewPwd = MD5Utils.getSaltMD5(newPassword, newSalt);
+        String md5SaltNewPwd = MD5Utils.getSaltMD5(userParam.getNewPassword(), newSalt);
         userEntity.setSalt(newSalt);
         userEntity.setUserPassword(md5SaltNewPwd);
         userAdminDao.update(userEntity);

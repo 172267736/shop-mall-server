@@ -30,6 +30,6 @@ public interface MenuDao {
 
     MenuEntity getById(Long id);
 
-    Integer deleteById(Long id);
+    Integer deleteByIds(List<Long> ids);
 
 }

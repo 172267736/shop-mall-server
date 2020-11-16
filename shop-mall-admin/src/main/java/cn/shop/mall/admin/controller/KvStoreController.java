@@ -24,9 +24,16 @@ public class KvStoreController {
 
     @ApiOperation("字典列表")
     @GetMapping("/list")
-    public ResponseVO list(@ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
+    public ResponseVO list(@ApiParam(value = "唯一键") @RequestParam(required = false) String keyFlag,
+                           @ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
                            @ApiParam(value = "每页条数", required = true) @RequestParam Integer page) {
-        return kvStoreService.list(limit, page);
+        return kvStoreService.list(keyFlag, limit, page);
+    }
+
+    @ApiOperation("字典详情")
+    @GetMapping("/detail")
+    public ResponseVO detail(@ApiParam(value = "编号", required = true) @RequestParam Long id) {
+        return kvStoreService.detail(id);
     }
 
     @ApiOperation("字典添加")
@@ -43,8 +50,8 @@ public class KvStoreController {
 
     @ApiOperation("字典删除")
     @PostMapping("/delete")
-    public ResponseVO delete(@ApiParam(value = "键", required = true) @RequestParam Long id) {
-        return kvStoreService.delete(id);
+    public ResponseVO delete(@RequestBody KvStoreParam kvStoreParam) {
+        return kvStoreService.delete(kvStoreParam.getIds());
     }
 
 }

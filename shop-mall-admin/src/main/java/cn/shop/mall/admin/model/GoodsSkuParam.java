@@ -2,18 +2,28 @@ package cn.shop.mall.admin.model;
 
 public class GoodsSkuParam {
 
-    private String skuFlag;
+    private Long uniqueId;
+
+    private String bindProperty;
 
     private Integer goodsStock;
 
     private String smallImg;
 
-    public String getSkuFlag() {
-        return skuFlag;
+    public Long getUniqueId() {
+        return uniqueId;
     }
 
-    public void setSkuFlag(String skuFlag) {
-        this.skuFlag = skuFlag;
+    public void setUniqueId(Long uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    public String getBindProperty() {
+        return bindProperty;
+    }
+
+    public void setBindProperty(String bindProperty) {
+        this.bindProperty = bindProperty;
     }
 
     public Integer getGoodsStock() {
