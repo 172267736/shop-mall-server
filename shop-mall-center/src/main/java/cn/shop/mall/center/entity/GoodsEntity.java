@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * 商品表
  */
-public class GoodsEntity extends GoodsExtend {
+public class GoodsEntity extends GoodsExtend{
 
     /**
      * 主键自增

@@ -1,11 +1,13 @@
 package cn.shop.mall.center.entity;
 
+import cn.shop.mall.common.model.PageBean;
+
 import java.util.Date;
 
 /**
  * 订单清单表
  */
-public class OrderAccountEntity {
+public class OrderAccountEntity extends PageBean {
 
     /**
      * 主键自增

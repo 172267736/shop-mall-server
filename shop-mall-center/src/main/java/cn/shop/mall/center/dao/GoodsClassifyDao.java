@@ -23,4 +23,6 @@ public interface GoodsClassifyDao {
     List<GoodsClassifyEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset, @Param("classifyName") String classifyName);
 
     List<GoodsClassifyEntity> listAll();
+
+    GoodsClassifyEntity getByParentId(Long parentId);
 }
