@@ -2,6 +2,7 @@ package cn.shop.mall.app.service;
 
 import cn.shop.mall.center.entity.GoodsClassifyEntity;
 import cn.shop.mall.center.entity.GoodsEntity;
+import cn.shop.mall.common.model.PageDto;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface GoodsService {
 
-    List<GoodsEntity> queryGoods(GoodsEntity goodsEntity);
+    PageDto<List<GoodsEntity>> queryGoods(GoodsEntity goodsEntity, Integer limit, Integer page);
 
     GoodsEntity queryGoodDetail(Long goodId);
 

@@ -5,10 +5,11 @@ import cn.shop.mall.center.dao.GoodsClassifyDao;
 import cn.shop.mall.center.dao.GoodsDao;
 import cn.shop.mall.center.entity.GoodsClassifyEntity;
 import cn.shop.mall.center.entity.GoodsEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.shop.mall.common.model.PageDto;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,25 +19,28 @@ import java.util.List;
 @Service
 public class GoodsServiceImpl implements GoodsService {
 
-    @Autowired
+    @Resource
     private GoodsClassifyDao goodsClassifyDao;
 
-    @Autowired
+    @Resource
     private GoodsDao goodsDao;
 
     @Override
-    public List<GoodsEntity> queryGoods(GoodsEntity goodsEntity) {
-        return null;
+    public PageDto<List<GoodsEntity>> queryGoods(GoodsEntity goodsEntity, Integer limit, Integer page) {
+        Integer offset = (page - 1) * limit;
+        List<GoodsEntity> goodsList = goodsDao.querGoods(goodsEntity, offset, limit);
+        Long count = goodsDao.count(null, null, goodsEntity.getGoodsName(), goodsEntity.getBelongClassifyId());
+        return new PageDto(goodsList, count, limit);
     }
 
     @Override
     public GoodsEntity queryGoodDetail(Long goodId) {
-        return null;
+        return goodsDao.getById(goodId);
     }
 
     @Override
     public GoodsClassifyEntity queryClassfiy(Long parentId) {
-        if(StringUtils.isEmpty(parentId)){
+        if (StringUtils.isEmpty(parentId)) {
             parentId = 0L;
         }
         return goodsClassifyDao.getByParentId(parentId);

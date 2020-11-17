@@ -4,6 +4,8 @@ import cn.shop.mall.app.service.OrderService;
 import cn.shop.mall.app.service.UserAppService;
 import cn.shop.mall.app.wechat.OrderPay;
 import cn.shop.mall.app.wechat.WechatUtil;
+import cn.shop.mall.center.entity.OrderAccountEntity;
+import cn.shop.mall.center.entity.OrderEntity;
 import cn.shop.mall.common.model.CurrentAuthorization;
 import cn.shop.mall.common.vo.ResponseVO;
 import io.swagger.annotations.Api;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +28,7 @@ import java.util.Map;
 
 @Api(tags = "订单相关")
 @RestController
-@RequestMapping(value = "/order")
+@RequestMapping(value = "/api/v1/order")
 public class OrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
@@ -44,8 +47,8 @@ public class OrderController {
 
     @ApiOperation("创建订单")
     @PostMapping("/createOrder")
-    public ResponseVO createOrder() {
-        return null;
+    public ResponseVO createOrder(@RequestBody OrderEntity orderEntity) {
+        return orderService.createOrder(orderEntity);
     }
 
     @ApiOperation("去支付")

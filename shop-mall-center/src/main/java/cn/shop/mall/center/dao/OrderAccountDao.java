@@ -13,6 +13,8 @@ public interface OrderAccountDao {
 
     Integer save(OrderAccountEntity orderAccountEntity);
 
+    Integer saveBatch(List<OrderAccountEntity> orderAccountEntityList);
+
     Integer update(OrderAccountEntity orderAccountEntity);
 
     List<OrderAccountEntity> listByOrderId(Long orderId);

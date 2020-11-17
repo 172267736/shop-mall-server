@@ -1,7 +1,6 @@
 package cn.shop.mall.center.entity.extend;
 
 import cn.shop.mall.center.entity.GoodsPropertyKeyEntity;
-import cn.shop.mall.common.model.PageBean;
 import com.alibaba.fastjson.JSONArray;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 /**
  * 菜单表
  */
-public class GoodsExtend extends PageBean{
+public class GoodsExtend {
 
     private String belongClassifyNames;
 
@@ -24,6 +23,9 @@ public class GoodsExtend extends PageBean{
     public JSONArray getBelongClassifyIdList() {
         return belongClassifyIdList;
     }
+
+    // 库存数量
+    private Integer goodsStock;
 
     public void setBelongClassifyIdList(JSONArray belongClassifyIdList) {
         this.belongClassifyIdList = belongClassifyIdList;

@@ -66,6 +66,10 @@
         </trim>
     </insert>
 
+    <insert id="saveBatch" parameterType="cn.shop.mall.center.entity.OrderAccountEntity">
+
+    </insert>
+
     <update id="update" parameterType="cn.shop.mall.center.entity.OrderAccountEntity">
         update order_account
         <set>

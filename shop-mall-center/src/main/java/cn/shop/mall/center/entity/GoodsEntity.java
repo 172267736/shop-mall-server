@@ -44,6 +44,9 @@ public class GoodsEntity extends GoodsExtend{
      */
     private String belongClassifyIds;
 
+    //所属分类
+    private Long belongClassifyId;
+
     /**
      * 商品标签
      */
@@ -144,6 +147,14 @@ public class GoodsEntity extends GoodsExtend{
 
     public String getBelongClassifyIds() {
         return belongClassifyIds;
+    }
+
+    public Long getBelongClassifyId() {
+        return belongClassifyId;
+    }
+
+    public void setBelongClassifyId(Long belongClassifyId) {
+        this.belongClassifyId = belongClassifyId;
     }
 
     public void setGoodsTags(String goodsTags) {
