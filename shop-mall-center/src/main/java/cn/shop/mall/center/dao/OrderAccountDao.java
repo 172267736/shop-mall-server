@@ -17,6 +17,6 @@ public interface OrderAccountDao {
 
     Integer update(OrderAccountEntity orderAccountEntity);
 
-    List<OrderAccountEntity> listByOrderId(Long orderId);
+    List<OrderAccountEntity> listByOrderId(Long orderUniqueId);
 
 }

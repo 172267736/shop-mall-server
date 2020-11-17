@@ -14,7 +14,9 @@ public enum CodeMsgEnum implements IResultCode {
 
     无权限请联系管理员("100004", "无权限请联系管理员"),
 
-    系统繁忙请稍后重试("999999", "系统繁忙,请稍后重试");
+    系统繁忙请稍后重试("999999", "系统繁忙,请稍后重试"),
+
+    STOCK_MESSAGE("000001", "库存不足");
 
     private String code;
 
