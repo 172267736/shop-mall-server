@@ -6,6 +6,8 @@ import cn.shop.mall.center.dao.GoodsDao;
 import cn.shop.mall.center.entity.GoodsClassifyEntity;
 import cn.shop.mall.center.entity.GoodsEntity;
 import cn.shop.mall.common.model.PageDto;
+import com.alibaba.fastjson.JSON;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,30 +21,49 @@ import java.util.List;
 @Service
 public class GoodsServiceImpl implements GoodsService {
 
-    @Resource
+    @Autowired
     private GoodsClassifyDao goodsClassifyDao;
 
-    @Resource
+    @Autowired
     private GoodsDao goodsDao;
 
     @Override
-    public PageDto<List<GoodsEntity>> queryGoods(GoodsEntity goodsEntity, Integer limit, Integer page) {
-        Integer offset = (page - 1) * limit;
-        List<GoodsEntity> goodsList = goodsDao.querGoods(goodsEntity, offset, limit);
-        Long count = goodsDao.count(null, null, goodsEntity.getGoodsName(), goodsEntity.getBelongClassifyId());
-        return new PageDto(goodsList, count, limit);
+    public PageDto<List<GoodsEntity>> queryGoods(GoodsEntity goodsEntity) {
+        goodsEntity.setOffset(goodsEntity.getPage(), goodsEntity.getLimit());
+        List<GoodsEntity> goodsList = goodsDao.querGoods(goodsEntity);
+        //字符串转换JSONArray 此处应该用TypeHanlder
+        goodsList.forEach(goods ->{
+            setGoodsInfo(goods);
+        });
+
+        Long count = goodsDao.count(1, null, goodsEntity.getGoodsName(), goodsEntity.getBelongClassifyId());
+        return new PageDto(goodsList, count, goodsEntity.getLimit());
     }
 
     @Override
     public GoodsEntity queryGoodDetail(Long goodId) {
-        return goodsDao.getById(goodId);
+        GoodsEntity goods = goodsDao.getById(goodId);
+        setGoodsInfo(goods);
+        return goods;
     }
 
     @Override
-    public GoodsClassifyEntity queryClassfiy(Long parentId) {
+    public List<GoodsClassifyEntity> queryClassfiy(Long parentId) {
         if (StringUtils.isEmpty(parentId)) {
             parentId = 0L;
         }
         return goodsClassifyDao.getByParentId(parentId);
     }
+
+    /**
+     * 设置商品属性
+     * @param goods 商品实体
+     */
+    public void setGoodsInfo(GoodsEntity goods){
+        goods.setGoodsTagList(JSON.parseArray(goods.getGoodsTags()));
+        goods.setBigImgList(JSON.parseArray(goods.getBigImgs()));
+        goods.setGoodsStock(goods.getGoodsStock()==null?0:goods.getGoodsStock());
+        goods.setBelongClassifyIdList(JSON.parseArray(goods.getBelongClassifyIds()));
+    }
+
 }

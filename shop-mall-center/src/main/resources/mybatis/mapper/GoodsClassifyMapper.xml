@@ -88,7 +88,7 @@
     </select>
 
     <select id="getByParentId" resultType="cn.shop.mall.center.entity.GoodsClassifyEntity">
-        select * from goods where deleted = 0 and classify_parent_id = #{classifyParentId}
+        select * from goods_classify where deleted = 0 and classify_parent_id = #{classifyParentId}
     </select>
 
     <select id="listAll" resultType="cn.shop.mall.center.entity.GoodsClassifyEntity">

@@ -33,21 +33,21 @@ public class OrderController {
 
     @ApiOperation("我的订单")
     @GetMapping("/myOrder")
-    public ResponseVO myOrder(@RequestBody @ApiParam(value = "orderEntity") OrderEntity orderEntity,
-                            @ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
-                            @ApiParam(value = "每页条数", required = true) @RequestParam Integer page) {
-        return orderService.myOrder(orderEntity, limit, page);
+    public ResponseVO myOrder(@ApiParam(value = "status") @RequestParam(value = "status", required = false) Integer status,
+                              @ApiParam(value = "page") @RequestParam("page") Integer page,
+                              @ApiParam(value = "limit") @RequestParam("limit") Integer limit) {
+        return orderService.myOrder(status, page, limit);
     }
 
     @ApiOperation("订单详情")
     @GetMapping("/myOrderDetail/{orderId}")
-    public ResponseVO myOrder(@ApiParam(value = "订单ID", required = true) @PathVariable Long orderId) {
+    public ResponseVO myOrder(@ApiParam(value = "订单ID") @PathVariable Long orderId) {
         return orderService.myOrderDetail(orderId);
     }
 
     @ApiOperation("创建订单")
     @PostMapping("/createOrder")
-    public ResponseVO createOrder(@RequestBody @ApiParam(value = "orderEntity") OrderEntity orderEntity) {
+    public ResponseVO createOrder(@ApiParam(value = "orderEntity") @RequestBody OrderEntity orderEntity) {
         try{
             return orderService.createOrder(orderEntity);
         }catch (BizException e){

@@ -5,7 +5,7 @@ import cn.shop.mall.common.vo.ResponseVO;
 
 public interface OrderService {
 
-    ResponseVO myOrder(OrderEntity orderEntity, Integer limit, Integer page);
+    ResponseVO myOrder(Integer status, Integer page, Integer limit);
 
     ResponseVO myOrderDetail(Long orderId);
 

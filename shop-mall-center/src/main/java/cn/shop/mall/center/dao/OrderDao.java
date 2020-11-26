@@ -17,10 +17,12 @@ public interface OrderDao {
 
     Integer update(OrderEntity orderEntity);
 
-    List<OrderEntity> list(OrderEntity orderEntity, @Param("limit") Integer limit, @Param("offset") Integer offset);
+    List<OrderEntity> list(OrderEntity orderEntity);
 
-    OrderEntity getById(Long id);
+    Integer updateOrderExpireState();
 
-    Long count();
+    OrderEntity getById(@Param("uniqueId") Long id);
+
+    Integer count(OrderEntity orderEntity);
 
 }

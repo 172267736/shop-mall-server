@@ -57,6 +57,18 @@ public class OrderAccountEntity {
      */
     private Date updateDate;
 
+    /**
+     * 商品名称
+     */
+    private String goodsName;
+
+    /**
+     * 大图
+     */
+    private String bigImgs;
+
+
+
     public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
     }
@@ -137,4 +149,19 @@ public class OrderAccountEntity {
         return updateDate;
     }
 
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getBigImgs() {
+        return bigImgs;
+    }
+
+    public void setBigImgs(String bigImgs) {
+        this.bigImgs = bigImgs;
+    }
 }

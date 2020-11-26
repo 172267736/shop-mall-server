@@ -2,6 +2,7 @@ package cn.shop.mall.center.dao;
 
 import cn.shop.mall.center.entity.OrderAccountEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,6 @@ public interface OrderAccountDao {
 
     Integer update(OrderAccountEntity orderAccountEntity);
 
-    List<OrderAccountEntity> listByOrderId(Long orderUniqueId);
+    List<OrderAccountEntity> listByOrderId(@Param("orderUniqueId") Long orderUniqueId);
 
 }

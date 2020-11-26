@@ -26,6 +26,5 @@ public interface GoodsDao {
                @Param("goodsName") String goodsName, @Param("belongClassifyId") Long belongClassifyId);
 
 
-    List<GoodsEntity> querGoods(GoodsEntity goodsEntity, @Param("limit")Integer limit,
-                                @Param("offset") Integer offset);
+    List<GoodsEntity> querGoods(GoodsEntity goodsEntity);
 }

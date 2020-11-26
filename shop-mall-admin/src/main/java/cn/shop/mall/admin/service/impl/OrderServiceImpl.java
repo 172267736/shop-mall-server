@@ -23,12 +23,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseVO list(Integer limit, Integer page) {
-        Long count = orderDao.count();
+        Integer count = orderDao.count(null);
         if (count == 0L) {
             return ResponseVO.SUCCESS(new PageDto<>());
         }
-        Integer offset = (page - 1) * limit;
-        List<OrderEntity> list = orderDao.list(limit, offset);
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOffset(orderEntity.getPage(), orderEntity.getLimit());
+        orderEntity.setLimit(limit);
+        List<OrderEntity> list = orderDao.list(orderEntity);
         return ResponseVO.SUCCESS(new PageDto<>(list, count, limit));
     }
 

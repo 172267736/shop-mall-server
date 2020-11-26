@@ -16,17 +16,17 @@
             <if test="goodsSkuUniqueId != null">
                 goods_sku_unique_id,
             </if>
-            <if test="price != null">
-                price,
+            <if test="singlePrice != null">
+                single_price,
             </if>
-            <if test="goodsInformation != null">
-                goods_information,
-            </if>
-            <if test="accountRemark != null">
-                account_remark,
+            <if test="buyNumber != null">
+                buy_number,
             </if>
             <if test="deleted != null">
                 deleted,
+            </if>
+            <if test="accountRemark != null">
+                account_remark,
             </if>
             <if test="createDate != null">
                 create_date,
@@ -45,17 +45,17 @@
             <if test="goodsSkuUniqueId != null">
                 #{goodsSkuUniqueId},
             </if>
-            <if test="price != null">
-                #{price},
+            <if test="singlePrice != null">
+                #{singlePrice},
             </if>
-            <if test="goodsInformation != null">
-                #{goodsInformation},
-            </if>
-            <if test="accountRemark != null">
-                #{accountRemark},
+            <if test="buyNumber != null">
+                #{buyNumber},
             </if>
             <if test="deleted != null">
                 #{deleted},
+            </if>
+            <if test="accountRemark != null">
+                #{accountRemark},
             </if>
             <if test="createDate != null">
                 #{createDate},
@@ -67,66 +67,15 @@
     </insert>
 
     <insert id="saveBatch" parameterType="cn.shop.mall.center.entity.OrderAccountEntity">
-        inser into order_account
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="orderUniqueId != null">
-                order_unique_id,
-            </if>
-            <if test="goodsUniqueId != null">
-                goods_unique_id,
-            </if>
-            <if test="goodsSkuUniqueId != null">
-                goods_sku_unique_id,
-            </if>
-            <if test="price != null">
-                price,
-            </if>
-            <if test="goodsInformation != null">
-                goods_information,
-            </if>
-            <if test="accountRemark != null">
-                account_remark,
-            </if>
-            <if test="deleted != null">
-                deleted,
-            </if>
-            <if test="createDate != null">
-                create_date,
-            </if>
-            <if test="updateDate != null">
-                update_date,
-            </if>
-        </trim>
-        <foreach collection="list" item="item" open="values (" close=")" separator=",">
-            <trim suffixOverrides=",">
-                <if test="orderUniqueId != null">
-                    #{item.orderUniqueId},
-                </if>
-                <if test="goodsUniqueId != null">
-                    #{item.goodsUniqueId},
-                </if>
-                <if test="goodsSkuUniqueId != null">
-                    #{item.goodsSkuUniqueId},
-                </if>
-                <if test="price != null">
-                    #{item.price},
-                </if>
-                <if test="goodsInformation != null">
-                    #{item.goodsInformation},
-                </if>
-                <if test="accountRemark != null">
-                    #{item.accountRemark},
-                </if>
-                <if test="deleted != null">
-                    #{item.deleted},
-                </if>
-                <if test="createDate != null">
-                    #{item.createDate},
-                </if>
-                <if test="updateDate != null">
-                    #{item.updateDate},
-                </if>
-            </trim>
+        insert into order_account(
+            order_unique_id, goods_unique_id, goods_sku_unique_id,
+            single_price, buy_number, deleted, account_remark,
+            create_date,  update_date)
+        <foreach collection="list" item="item" open="values " separator=",">
+            (#{item.orderUniqueId}, #{item.goodsUniqueId},
+            #{item.goodsSkuUniqueId},  #{item.singlePrice},
+            #{item.buyNumber}, #{item.deleted}, #{item.accountRemark},
+            #{item.createDate}, #{item.updateDate})
         </foreach>
     </insert>
 
@@ -142,11 +91,11 @@
             <if test="goodsSkuUniqueId != null">
                 goods_sku_unique_id = #{goodsSkuUniqueId},
             </if>
-            <if test="price != null">
-                price = #{price},
+            <if test="singlePrice != null">
+                single_price = #{singlePrice},
             </if>
-            <if test="goodsInformation != null">
-                goods_information = #{goodsInformation},
+            <if test="buyNumber != null">
+                buy_number = #{buyNumber},
             </if>
             <if test="accountRemark != null">
                 account_remark = #{accountRemark},
@@ -165,10 +114,11 @@
     </update>
 
     <select id="listByOrderId" resultType="cn.shop.mall.center.entity.OrderAccountEntity">
-        select * from order_account
+        select a.*, b.goods_name, b.big_imgs from order_account a, goods b
         <where>
+            a.goods_unique_id=b.unique_id
             <if test="orderUniqueId != null">
-                and order_unique_id = #{orderUniqueId}
+                and a.order_unique_id = #{orderUniqueId}
             </if>
         </where>
     </select>

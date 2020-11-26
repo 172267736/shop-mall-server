@@ -3,6 +3,7 @@ package cn.shop.mall.app.controller;
 import cn.shop.mall.app.service.GoodsService;
 import cn.shop.mall.center.entity.GoodsEntity;
 import cn.shop.mall.common.vo.ResponseVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by LSY on 2020/11/16.
  */
+@Api(tags = "商品相关")
 @RestController
 @RequestMapping("/api/v1/goods")
 public class GoodsController {
@@ -26,10 +28,8 @@ public class GoodsController {
      */
     @ApiOperation("app-商品列表")
     @PostMapping("/queryGoods")
-    public ResponseVO queryGoods(@RequestBody GoodsEntity goodsEntity,
-                                 @ApiParam(value = "起始条数", required = true) @RequestParam Integer limit,
-                                 @ApiParam(value = "每页条数", required = true) @RequestParam Integer page) {
-        return ResponseVO.SUCCESS(goodsService.queryGoods(goodsEntity, limit, page));
+    public ResponseVO queryGoods(@RequestBody GoodsEntity goodsEntity) {
+        return ResponseVO.SUCCESS(goodsService.queryGoods(goodsEntity));
     }
 
     /**
@@ -38,8 +38,8 @@ public class GoodsController {
      * @return 商品对象
      */
     @ApiOperation("app-商品详情")
-    @GetMapping("queryGoodDetail/{goodId}")
-    public ResponseVO queryGoodDetail(Long goodId) {
+    @GetMapping("/queryGoodDetail/{goodId}")
+    public ResponseVO queryGoodDetail(@PathVariable("goodId") Long goodId) {
         return ResponseVO.SUCCESS(goodsService.queryGoodDetail(goodId));
     }
 
@@ -51,7 +51,7 @@ public class GoodsController {
      */
     @ApiOperation("app-商品分类")
     @GetMapping("/category")
-    public ResponseVO queryCategory(@RequestParam("parentId") Long parentId) {
+    public ResponseVO queryCategory(@RequestParam(name = "parentId", required = false) Long parentId) {
         return ResponseVO.SUCCESS(goodsService.queryClassfiy(parentId));
     }
 }

@@ -24,5 +24,5 @@ public interface GoodsClassifyDao {
 
     List<GoodsClassifyEntity> listAll();
 
-    GoodsClassifyEntity getByParentId(Long parentId);
+    List<GoodsClassifyEntity> getByParentId(Long parentId);
 }

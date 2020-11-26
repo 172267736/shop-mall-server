@@ -11,10 +11,10 @@ import java.util.List;
  */
 public interface GoodsService {
 
-    PageDto<List<GoodsEntity>> queryGoods(GoodsEntity goodsEntity, Integer limit, Integer page);
+    PageDto<List<GoodsEntity>> queryGoods(GoodsEntity goodsEntity);
 
     GoodsEntity queryGoodDetail(Long goodId);
 
-    GoodsClassifyEntity queryClassfiy(Long parentId);
+    List<GoodsClassifyEntity> queryClassfiy(Long parentId);
 
 }
