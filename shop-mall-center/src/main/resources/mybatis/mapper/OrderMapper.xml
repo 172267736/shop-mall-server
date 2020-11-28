@@ -2,10 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.shop.mall.center.dao.OrderDao">
-
+    
+    <sql id="orderConditionSql">
+        <where>
+            <if test="orderNumber != null">
+                and order_number = concat('%', #{orderNumber},'%')
+            </if>
+            <if test="thirdpartOrderNumber != null">
+                and thirdpart_order_number = concat('%', #{thirdpartOrderNumber},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="expireState != null">
+                and expire_state = #{expireState}
+            </if>
+            <if test="payUserUniqueId != null">
+                and pay_user_unique_id = #{payUserUniqueId}
+            </if>
+            <if test="payType != null">
+                and pay_type = #{payType}
+            </if>
+            <if test="payOverTime != null">
+                and pay_over_time = #{payOverTime}
+            </if>
+            <if test="allocationAddressUniqueId != null">
+                and allocation_address_unique_id = #{allocationAddressUniqueId}
+            </if>
+            <if test="orderRemark != null">
+                and order_remark = #{orderRemark}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </sql>
+    
+    
     <insert id="save" keyColumn="unique_id" keyProperty="uniqueId" parameterType="cn.shop.mall.center.entity.OrderEntity"
             useGeneratedKeys="true">
-        insert into order
+        insert into `order`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderNumber != null">
                 order_number,
@@ -103,7 +145,7 @@
     </insert>
 
     <update id="update" parameterType="cn.shop.mall.center.entity.OrderEntity">
-        update order
+        update `order`
         <set>
             <if test="orderNumber != null">
                 order_number = #{orderNumber},
@@ -153,4 +195,26 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.OrderEntity">
+        select * from `order`
+        <include refid="orderConditionSql"/>
+        order by create_date desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="integer">
+        select count(*) from `order`
+        <include refid="orderConditionSql"/>
+    </select>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.OrderEntity">
+        select * from `order` where unique_id = #{uniqueId}
+    </select>
+
+    <update id="updateOrderExpireState">
+        update `order` set expire_state=1
+        where timestampdiff(SECOND, create_date, now())>3600 and expire_state=0
+    </update>
+
 </mapper>

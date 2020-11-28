@@ -3,6 +3,7 @@ package cn.shop.mall.center.dao;
 import cn.shop.mall.center.entity.OrderEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -16,10 +17,12 @@ public interface OrderDao {
 
     Integer update(OrderEntity orderEntity);
 
-    List<OrderEntity> list(@Param("limit") Integer limit, @Param("offset") Integer offset);
+    List<OrderEntity> list(OrderEntity orderEntity);
 
-    OrderEntity getById(Long id);
+    Integer updateOrderExpireState();
 
-    Long count();
+    OrderEntity getById(@Param("uniqueId") Long id);
+
+    Integer count(OrderEntity orderEntity);
 
 }

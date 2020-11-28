@@ -32,4 +32,7 @@ public class CurrentAuthorization {
         return getUserBean().getRequestIp();
     }
 
+    public static Long getUserId(){
+        return getUserBean().getUserId();
+    }
 }

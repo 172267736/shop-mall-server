@@ -57,35 +57,47 @@ public class OrderAccountEntity {
      */
     private Date updateDate;
 
-    public void setUniqueId(Long uniqueId){
+    /**
+     * 商品名称
+     */
+    private String goodsName;
+
+    /**
+     * 大图
+     */
+    private String bigImgs;
+
+
+
+    public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
     }
 
-    public Long getUniqueId(){
+    public Long getUniqueId() {
         return uniqueId;
     }
 
-    public void setOrderUniqueId(Long orderUniqueId){
+    public void setOrderUniqueId(Long orderUniqueId) {
         this.orderUniqueId = orderUniqueId;
     }
 
-    public Long getOrderUniqueId(){
+    public Long getOrderUniqueId() {
         return orderUniqueId;
     }
 
-    public void setGoodsUniqueId(Long goodsUniqueId){
+    public void setGoodsUniqueId(Long goodsUniqueId) {
         this.goodsUniqueId = goodsUniqueId;
     }
 
-    public Long getGoodsUniqueId(){
+    public Long getGoodsUniqueId() {
         return goodsUniqueId;
     }
 
-    public void setGoodsSkuUniqueId(Long goodsSkuUniqueId){
+    public void setGoodsSkuUniqueId(Long goodsSkuUniqueId) {
         this.goodsSkuUniqueId = goodsSkuUniqueId;
     }
 
-    public Long getGoodsSkuUniqueId(){
+    public Long getGoodsSkuUniqueId() {
         return goodsSkuUniqueId;
     }
 
@@ -105,36 +117,51 @@ public class OrderAccountEntity {
         this.buyNumber = buyNumber;
     }
 
-    public void setAccountRemark(String accountRemark){
+    public void setAccountRemark(String accountRemark) {
         this.accountRemark = accountRemark;
     }
 
-    public String getAccountRemark(){
+    public String getAccountRemark() {
         return accountRemark;
     }
 
-    public void setDeleted(Integer deleted){
+    public void setDeleted(Integer deleted) {
         this.deleted = deleted;
     }
 
-    public Integer getDeleted(){
+    public Integer getDeleted() {
         return deleted;
     }
 
-    public void setCreateDate(Date createDate){
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public Date getCreateDate(){
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setUpdateDate(Date updateDate){
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 
-    public Date getUpdateDate(){
+    public Date getUpdateDate() {
         return updateDate;
     }
 
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getBigImgs() {
+        return bigImgs;
+    }
+
+    public void setBigImgs(String bigImgs) {
+        this.bigImgs = bigImgs;
+    }
 }

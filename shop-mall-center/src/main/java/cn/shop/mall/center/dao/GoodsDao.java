@@ -25,4 +25,6 @@ public interface GoodsDao {
     Long count(@Param("status") Integer status, @Param("goodsTag") String goodsTag,
                @Param("goodsName") String goodsName, @Param("belongClassifyId") Long belongClassifyId);
 
+
+    List<GoodsEntity> querGoods(GoodsEntity goodsEntity);
 }

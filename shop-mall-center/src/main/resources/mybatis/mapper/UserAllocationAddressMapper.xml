@@ -26,6 +26,9 @@
             <if test="addressDetail != null">
                 address_detail,
             </if>
+            <if test="defaultState != null">
+                default_state,
+            </if>
             <if test="tag != null">
                 tag,
             </if>
@@ -57,6 +60,9 @@
             </if>
             <if test="addressDetail != null">
                 #{addressDetail},
+            </if>
+            <if test="defaultState != null">
+                #{defaultState},
             </if>
             <if test="tag != null">
                 #{tag},
@@ -94,6 +100,9 @@
             <if test="addressDetail != null">
                 address_detail = #{addressDetail},
             </if>
+            <if test="defaultState != null">
+                default_state = #{defaultState},
+            </if>
             <if test="tag != null">
                 tag = #{tag},
             </if>
@@ -109,4 +118,51 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+    
+    <update id="updateStateByUserId">
+        update user_allocation_address set default_state = #{defaultState}
+        where user_unique_id = #{userUniqueId}
+    </update>
+
+    <select id="getById" resultType="cn.shop.mall.center.entity.UserAllocationAddressEntity">
+        select * from user_allocation_address
+        where unique_id = #{uniqueId}
+    </select>
+
+    <select id="list" resultType="cn.shop.mall.center.entity.UserAllocationAddressEntity">
+        select * from user_allocation_address
+        <where>
+            <if test="userUniqueId != null">
+                and user_unique_id = #{userUniqueId}
+            </if>
+            <if test="province != null">
+                and province = #{province}
+            </if>
+            <if test="city != null">
+                and city = #{city}
+            </if>
+            <if test="region != null">
+                and region = #{region}
+            </if>
+            <if test="road != null">
+                and road = #{road}
+            </if>
+            <if test="addressDetail != null">
+                and address_detail = #{addressDetail}
+            </if>
+            <if test="tag != null">
+                and tag = #{tag}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
 </mapper>

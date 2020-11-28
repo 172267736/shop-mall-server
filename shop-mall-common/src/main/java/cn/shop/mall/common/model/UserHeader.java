@@ -17,4 +17,9 @@ public interface UserHeader {
     String AuthUriList = "authUriList";
 
     String RequestIp = "requestIp";
+
+    /**
+     * 小程序的用户
+     */
+    String UserId = "userId";
 }

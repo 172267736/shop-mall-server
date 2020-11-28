@@ -87,6 +87,10 @@
         select * from goods_classify where deleted = 0 and unique_id = #{uniqueId}
     </select>
 
+    <select id="getByParentId" resultType="cn.shop.mall.center.entity.GoodsClassifyEntity">
+        select * from goods_classify where deleted = 0 and classify_parent_id = #{classifyParentId}
+    </select>
+
     <select id="listAll" resultType="cn.shop.mall.center.entity.GoodsClassifyEntity">
         select a.*,a.classify_name as name,(select b.classify_name from goods_classify as b where b.unique_id = a.classify_parent_id) as classifyParentName from goods_classify as a where a.deleted = 0
     </select>

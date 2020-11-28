@@ -139,4 +139,9 @@
     <select id="listByGoodsId" resultType="cn.shop.mall.center.entity.GoodsSkuEntity">
         select * from goods_sku where goods_unique_id = #{goodsId} and deleted = 0
     </select>
+    
+    <update id="updateStock" parameterType="cn.shop.mall.center.entity.GoodsSkuEntity">
+        update goods_sku set goods_stock=#{goodsStock}
+        where goods_unique_id = #{goodsUniqueId}
+    </update>
 </mapper>

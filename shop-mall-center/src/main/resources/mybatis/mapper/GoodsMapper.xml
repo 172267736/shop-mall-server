@@ -199,6 +199,21 @@
         limit #{offset},#{limit}
     </select>
 
+    <select id="querGoods" parameterType="cn.shop.mall.center.entity.GoodsEntity" resultType="cn.shop.mall.center.entity.GoodsEntity">
+        select a.*,b.goods_stock from goods a
+        left join goods_sku b on a.unique_id=b.goods_unique_id
+        <where>
+            a.deleted=0 and a.status=1
+            <if test="goodsName!=null">
+                and goods_name like concat('%', #{goodsName}, '%')
+            </if>
+            <if test="belongClassifyId!=null">
+                and json_contains(belong_classify_ids,JSON_ARRAY(#{belongClassifyId}))
+            </if>
+        </where>
+        order by top_sort limit #{offset}, #{limit}
+    </select>
+
     <select id="count" resultType="java.lang.Long">
         select count(1) from goods
         <where>

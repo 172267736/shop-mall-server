@@ -21,4 +21,5 @@ public interface GoodsSkuDao {
 
     List<GoodsSkuEntity> listByGoodsId(Long goodsId);
 
+    Integer updateStock(GoodsSkuEntity goodsSkuEntity);
 }

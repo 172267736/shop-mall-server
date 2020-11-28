@@ -28,7 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String token = request.getHeader(UserHeader.AuthToken);
+        /*String token = request.getHeader(UserHeader.AuthToken);
         if (StringUtils.isEmpty(token)) {
             throw new BizException(CodeMsgEnum.参数有误);
         }
@@ -43,7 +43,16 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (!user.getAuthUriList().contains(uri)) {
             //用户无权限
             throw new BizException(CodeMsgEnum.无权限请联系管理员);
+        }*/
+
+        //获取小程序的用户ID
+        UserBean user = new UserBean();
+        String userId = request.getHeader(UserHeader.UserId);
+        if (StringUtils.isEmpty(userId)) {
+            throw new BizException(CodeMsgEnum.请登录);
         }
+        user.setUserId(Long.parseLong(userId));
+
         CurrentAuthorization.setUserBean(user);
         return true;
     }
@@ -61,6 +70,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         CurrentAuthorization.removeUserBean();
+        //去掉实体中的Page属性
+
+
     }
 
 }
