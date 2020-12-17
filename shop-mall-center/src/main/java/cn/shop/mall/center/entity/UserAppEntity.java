@@ -1,10 +1,13 @@
 package cn.shop.mall.center.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
  * 应用用户表
  */
+@Data
 public class UserAppEntity {
 
     /**
@@ -38,6 +41,27 @@ public class UserAppEntity {
     private String nickName;
 
     /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 最后登录IP
+     */
+    private Date lastLoginIp;
+
+    /**
+     * 注册IP
+     */
+    private String registerIp;
+
+    /**
+     * 微信OPENID
+     */
+    private String weixinOpenid;
+
+
+    /**
      * 是否删除（0：否；1：删除）
      */
     private Integer deleted;
@@ -52,76 +76,5 @@ public class UserAppEntity {
      */
     private Date updateDate;
 
-    public void setUniqueId(Long uniqueId){
-        this.uniqueId = uniqueId;
-    }
-
-    public Long getUniqueId(){
-        return uniqueId;
-    }
-
-    public void setUserName(String userName){
-        this.userName = userName;
-    }
-
-    public String getUserName(){
-        return userName;
-    }
-
-    public void setHeaderImg(String headerImg){
-        this.headerImg = headerImg;
-    }
-
-    public String getHeaderImg(){
-        return headerImg;
-    }
-
-    public void setSex(Integer sex){
-        this.sex = sex;
-    }
-
-    public Integer getSex(){
-        return sex;
-    }
-
-    public void setPhone(String phone){
-        this.phone = phone;
-    }
-
-    public String getPhone(){
-        return phone;
-    }
-
-    public void setNickName(String nickName){
-        this.nickName = nickName;
-    }
-
-    public String getNickName(){
-        return nickName;
-    }
-
-    public void setDeleted(Integer deleted){
-        this.deleted = deleted;
-    }
-
-    public Integer getDeleted(){
-        return deleted;
-    }
-
-    public void setCreateDate(Date createDate){
-        this.createDate = createDate;
-    }
-
-    public Date getCreateDate(){
-        return createDate;
-    }
-
-    public void setUpdateDate(Date updateDate){
-        this.updateDate = updateDate;
-    }
-
-    public Date getUpdateDate(){
-        return updateDate;
-    }
 
 }

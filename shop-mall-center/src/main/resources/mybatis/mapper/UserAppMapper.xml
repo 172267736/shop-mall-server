@@ -90,4 +90,13 @@
         </set>
         where unique_id = #{uniqueId}
     </update>
+
+    <select id="get" resultType="cn.shop.mall.center.entity.UserAppEntity">
+         select * from user_app
+         <where>
+             <if test="weixinOpenid != null and weixinOpenid != ''">
+                 and weixin_openid = #{weixinOpenid}
+             </if>
+         </where>
+    </select>
 </mapper>

@@ -18,8 +18,4 @@ public interface UserHeader {
 
     String RequestIp = "requestIp";
 
-    /**
-     * 小程序的用户
-     */
-    String UserId = "userId";
 }

@@ -5,10 +5,7 @@ import cn.shop.mall.common.exception.BizException;
 import cn.shop.mall.common.model.CurrentAuthorization;
 import cn.shop.mall.common.model.UserBean;
 import cn.shop.mall.common.model.UserHeader;
-import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
+import com.google.common.base.Strings;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,38 +17,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
     /**
      * controller 执行之前调用
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        /*String token = request.getHeader(UserHeader.AuthToken);
-        if (StringUtils.isEmpty(token)) {
-            throw new BizException(CodeMsgEnum.参数有误);
-        }
-        //从redis获取用户信息
-        String userStr = redisTemplate.opsForValue().get(token);
-        if (StringUtils.isEmpty(userStr)) {
-            //用户信息不存在
+        String token = request.getHeader(UserHeader.AuthToken);
+        if (Strings.isNullOrEmpty(token)) {
             throw new BizException(CodeMsgEnum.请登录);
         }
-        UserBean user = JSON.parseObject(userStr, UserBean.class);
-        String uri = request.getRequestURI();
-        if (!user.getAuthUriList().contains(uri)) {
-            //用户无权限
-            throw new BizException(CodeMsgEnum.无权限请联系管理员);
-        }*/
 
         //获取小程序的用户ID
         UserBean user = new UserBean();
-        String userId = request.getHeader(UserHeader.UserId);
-        if (StringUtils.isEmpty(userId)) {
-            throw new BizException(CodeMsgEnum.请登录);
-        }
-        user.setUserId(Long.parseLong(userId));
+        user.build(UserHeader.RequestIp, getClientIp(request));
 
         CurrentAuthorization.setUserBean(user);
         return true;
@@ -70,9 +48,23 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         CurrentAuthorization.removeUserBean();
-        //去掉实体中的Page属性
+    }
 
-
+    /**
+     * 获取请求方IP
+     *
+     * @return 客户端Ip
+     */
+    private String getClientIp(HttpServletRequest request) {
+        String xff = request.getHeader("X-Real-IP");
+        if (xff != null) {
+            return xff;
+        }
+        xff = request.getHeader("x-forwarded-for");
+        if (xff == null) {
+            return "8.8.8.8";
+        }
+        return xff;
     }
 
 }
